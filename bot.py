@@ -1,5 +1,7 @@
 import random
 import os
+import threading
+from http.server import HTTPServer, BaseHTTPRequestHandler
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 
