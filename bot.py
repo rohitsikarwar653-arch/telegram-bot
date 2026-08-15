@@ -107,97 +107,31 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
 
-    if text in ("hi", "hello", "hey"):
+    if any(x in text for x in ("hello", "hi", "hii", "hey", "namaste", "नमस्ते")):
         await update.message.reply_text(
-            "Namaste! 👋\nKaise help kar sakta hoon? 😊"
+            random.choice([
+                "Hello 😊❤️ Kaise ho?",
+                "Hii 😄❤️ Kya haal hai?",
+                "Hey 😊 Main yahin hoon!"
+            ])
         )
 
-    elif text in ("namaste", "namaskar"):
+    elif "kaise ho" in text or "kaisa ho" in text:
         await update.message.reply_text(
-            "🙏 Namaste!\nShubham Help Bot me aapka swagat hai."
+            random.choice([
+                "Main bilkul badhiya hoon 😊❤️ Aap kaise ho?",
+                "Sab badhiya 😄 Aap batao?",
+                "Main theek hoon 🤖❤️"
+            ])
         )
 
-    elif text in ("radhe radhe", "radhey radhey"):
-        await update.message.reply_text("🙏 Radhe Radhe ❤️")
-    elif any(x in text for x in ("kya kar rahe ho", "kya kr rahe ho", "kya kar rhe ho", "kya kr rhe ho")):
-        replies = [
-            "Bas aapse baat kar raha hoon 😄❤️",
-            "Kuch khaas nahi, aapka message dekh raha hoon 😎",
-            "Bas yahin hoon, aapse chatting kar raha hoon 😊",
-            "Aapka reply dene me busy hoon 🤖❤️"
-        ]
-        await update.message.reply_text(random.choice(replies))
-
-    elif "kaise ho" in text:
-        replies = [
-            "Main bilkul badhiya hoon 😊 Aap batao?",
-            "Ekदम mast hoon 😄❤️ Aap kaise ho?",
-            "Bilkul fine! 😎 Aapka kya haal hai?",
-            "Main badhiya hoon 😊 Aapse baat karke aur bhi achha lag raha hai ❤️"
-        ]
-        await update.message.reply_text(random.choice(replies))
-
-    elif "kahan ho" in text:
-        await update.message.reply_text("Yahin hoon 😎 Aapse baat kar raha hoon.")
-    elif text in ("haan", "ha", "yes", "ok", "okay"):
-        replies = [
-            "Haan ji 😊❤️",
-            "Bilkul 😄",
-            "Okay 👍❤️",
-            "Ji haan 😎"
-        ]
-        await update.message.reply_text(random.choice(replies))
-
-    elif text in ("nahi", "na", "no"):
-        replies = [
-            "Achha 😄",
-            "Koi baat nahi ❤️",
-            "Theek hai 😊",
-            "Okay, samajh gaya 👍"
-        ]
-        await update.message.reply_text(random.choice(replies))
-
-    elif text in ("lol", "haha", "hahaha"):
-        replies = [
-            "😂😂 Hahaha!",
-            "Haha 😄❤️",
-            "Aap bhi na 😂"
-        ]
-        await update.message.reply_text(random.choice(replies))
-
-    elif text in ("ok", "okay"):
-        await update.message.reply_text("Okay 😊👍")
+    elif any(x in text for x in ("kya kar rahe ho", "kya kr rahe ho", "kya kar rhe ho")):
         await update.message.reply_text(
-            "Yahin hoon 😎 Aapse baat kar raha hoon."
-        )
-
-    elif "good morning" in text:
-        await update.message.reply_text(
-            "Good morning 🌅❤️ Aapka din shandar rahe!"
-        )
-
-    elif "good night" in text:
-        await update.message.reply_text(
-            "Good night 🌙❤️ Sweet dreams!"
-        )
-
-    elif text in ("bye", "goodbye"):
-        await update.message.reply_text(
-            "Bye 👋❤️ Phir milte hain!"
-        )
-    elif "thank" in text or "thanks" in text:
-        await update.message.reply_text(
-            "You're most welcome 😊❤️"
-        )
-
-    elif "kya haal hai" in text:
-        await update.message.reply_text(
-            "Bilkul badhiya 😄 Aapka kya haal hai?"
-        )
-
-    elif "kya chal raha hai" in text:
-        await update.message.reply_text(
-            "Bas sab badhiya chal raha hai 😎❤️"
+            random.choice([
+                "Bas aapse baat kar raha hoon 😄❤️",
+                "Abhi yahin hoon 😊 Aapse chat kar raha hoon.",
+                "Bas online hoon 🤖😎"
+            ])
         )
 
     elif "tumhara naam kya hai" in text or "aapka naam kya hai" in text:
@@ -210,31 +144,100 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Main Shubham Help Bot hoon 🤖😊"
         )
 
-    elif "miss you" in text:
+    elif "miss you" in text or "miss u" in text:
         await update.message.reply_text(
             "Aww 😊❤️ Main yahin hoon!"
         )
-    elif any(x in text for x in ("khana kha liya", "khana khaya", "khaana kha liya", "khaana khaya")):
-        await update.message.reply_text(random.choice(["Haan ji 😄 Aapne kha liya?", "Haan 😊 Khana kha liya. Aapne?", "Ji haan ❤️ Aapne khana khaya?"]))
 
-    elif any(x in text for x in ("shubham kaha hai", "shubham kahan hai", "shubham kaha par hai", "shubham kahan par hai")):
-        await update.message.reply_text(random.choice(["Shubham yahin hai 😊", "Shubham abhi yahin hai 😄", "Yahin hai ❤️ Aapse baat kar raha hai."]))
+    elif any(x in text for x in (
+        "khana kha liya", "khana khaya",
+        "khaana kha liya", "khaana khaya"
+    )):
+        await update.message.reply_text(
+            random.choice([
+                "Haan ji 😄 Aapne kha liya?",
+                "Haan 😊 Khana kha liya. Aapne?",
+                "Ji haan ❤️ Aapne khana khaya?"
+            ])
+        )
 
-    elif any(x in text for x in ("kya hua", "kya hua hai")):
-        await update.message.reply_text(random.choice(["Kuch nahi 😊 Sab badhiya hai.", "Kuch khaas nahi 😄", "Sab theek hai ❤️"]))
+    elif any(x in text for x in (
+        "shubham kaha hai", "shubham kahan hai",
+        "shubham kaha par hai", "shubham kahan par hai"
+    )):
+        await update.message.reply_text(
+            random.choice([
+                "Shubham yahin hai 😊",
+                "Shubham abhi yahin hai 😄",
+                "Yahin hai ❤️ Aapse baat kar raha hai."
+            ])
+        )
 
-    elif any(x in text for x in ("kahan ja rahe ho", "kaha ja rahe ho")):
-        await update.message.reply_text(random.choice(["Abhi kahin nahi 😄", "Bas thoda bahar ja raha hoon 😊", "Abhi yahin hoon ❤️"]))
+    elif "kya hua" in text or "kya hua hai" in text:
+        await update.message.reply_text(
+            random.choice([
+                "Kuch nahi 😊 Sab badhiya hai.",
+                "Kuch khaas nahi 😄",
+                "Sab theek hai ❤️"
+            ])
+        )
+
+    elif "kahan ja rahe ho" in text or "kaha ja rahe ho" in text:
+        await update.message.reply_text(
+            random.choice([
+                "Abhi kahin nahi 😄",
+                "Bas thoda bahar ja raha hoon 😊",
+                "Abhi yahin hoon ❤️"
+            ])
+        )
+
+    elif any(x in text for x in ("thank you", "thanks", "dhanyawad", "shukriya")):
+        await update.message.reply_text(
+            random.choice([
+                "You're welcome 😊❤️",
+                "Koi baat nahi 😄",
+                "Hamesha 😊❤️"
+            ])
+        )
+
+    elif "good morning" in text or "suprabhat" in text:
+        await update.message.reply_text(
+            "Good Morning 🌅😊❤️ Aapka din bahut achha rahe!"
+        )
+
+    elif "good night" in text or "shubh ratri" in text:
+        await update.message.reply_text(
+            "Good Night 🌙😴❤️ Sweet dreams!"
+        )
+
+    elif any(x in text for x in ("haha", "hahaha", "lol")):
+        await update.message.reply_text(
+            random.choice([
+                "Haha 😄😂",
+                "😂😂 Bahut funny!",
+                "Hehe 😄❤️"
+            ])
+        )
+
+    elif any(x in text for x in ("bye", "goodbye", "see you")):
+        await update.message.reply_text(
+            random.choice([
+                "Bye 😊❤️ Phir milte hain!",
+                "Okay 😄 Take care!",
+                "See you soon 🤖❤️"
+            ])
+        )
 
     else:
         replies = [
-            "Hmm 😊 Iske baare mein thoda aur batao.",
-            "Achha 😄 Phir aage batao...",
-            "Samajh raha hoon 😊",
+            "Achha 😊 Phir batao...",
+            "Hmm 😄 Samajh raha hoon.",
             "Ohh 😎 Interesting!",
-            "Haha 😄 Aapki baat interesting hai ❤️"
+            "Achha ji ❤️ Aage batao.",
+            "Haan 😊 Main sun raha hoon."
         ]
         await update.message.reply_text(random.choice(replies))
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
