@@ -1,233 +1,255 @@
 import random
 import os
-import threading
-from http.server import HTTPServer, BaseHTTPRequestHandler
 from telegram import Update
-from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.ext import (
+    Application,
+    CommandHandler,
+    CallbackQueryHandler,
+    MessageHandler,
+    ContextTypes,
+    filters,
+)
 
-TOKEN = os.environ["BOT_TOKEN"]
-ADMIN_ID =6222405805
+def main_menu():
+    keyboard = [
+        [
+            InlineKeyboardButton("🤖 Help", callback_data="help"),
+            InlineKeyboardButton("ℹ️ About", callback_data="about"),
+        ],
+        [
+            InlineKeyboardButton("📩 Contact", callback_data="contact"),
+            InlineKeyboardButton("🙏 Radhe Radhe", callback_data="radhe"),
+        ],
+    ]
+    return InlineKeyboardMarkup(keyboard)
+
+def back_button():
+    return InlineKeyboardMarkup([
+        [InlineKeyboardButton("🏠 Main Menu", callback_data="main_menu")]
+    ])
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Namaste! 👋 Main Shubham Help Bot hoon."
+        "🙏 Namaste!\n\n"
+        "Main Shubham Help Bot hoon. 🤖\n"
+        "Neeche menu se option choose kijiye 👇",
+        reply_markup=main_menu(),
     )
-async def myid(update: Update, context):
-    await update.message.reply_text(f"Your Chat ID is: {update.effective_chat.id}")
-  
 
-async def manual_reply(update: Update, context):
-    if update.effective_user.id != ADMIN_ID:
-        await update.message.reply_text("⛔ Ye command sirf admin ke liye hai.")
-        return
-
-    if len(context.args) < 2:
-        await update.message.reply_text(
-            "Use: /reply USER_ID message"
-        )
-        return
-
-    try:
-        user_id = int(context.args[0])
-        text = " ".join(context.args[1:])
-
-        await context.bot.send_message(
-            chat_id=user_id,
-            text=text
-        )
-
-        await update.message.reply_text("✅ Reply send ho gaya.")
-
-    except Exception as e:
-        await update.message.reply_text(f"❌ Error: {e}")
-
-async def help_command(update: Update, context):
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "Commands:\n"
-        "/start - Bot start kare\n"
-        "/help - Help dekhein"
+        "🤖 Help Menu\n\n"
+        "/start - Main menu\n"
+        "/help - Help menu\n"
+        "/about - Bot ke baare mein\n"
+        "/contact - Contact information",
+        reply_markup=back_button(),
     )
 
+async def about_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "ℹ️ About\n\n"
+        "Ye Shubham Help Bot hai. 🤖❤️\n"
+        "Aap menu buttons ya commands ka use kar sakte hain.",
+        reply_markup=back_button(),
+    )
+
+async def contact_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await update.message.reply_text(
+        "📩 Contact\n\n"
+        "Aap yahin message bhejkar help le sakte hain. 😊",
+        reply_markup=back_button(),
+    )
+
+async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    if query.data == "main_menu":
+        await query.edit_message_text(
+            "🙏 Main Menu\n\n"
+            "Neeche se option choose kijiye 👇",
+            reply_markup=main_menu(),
+        )
+
+    elif query.data == "help":
+        await query.edit_message_text(
+            "🤖 Help Menu\n\n"
+            "/start - Main menu\n"
+            "/help - Help menu\n"
+            "/about - About\n"
+            "/contact - Contact",
+            reply_markup=back_button(),
+        )
+
+    elif query.data == "about":
+        await query.edit_message_text(
+            "ℹ️ About\n\n"
+            "Ye Shubham Help Bot hai. 🤖❤️",
+            reply_markup=back_button(),
+        )
+
+    elif query.data == "contact":
+        await query.edit_message_text(
+            "📩 Contact\n\n"
+            "Aap yahin message bhejkar help le sakte hain. 😊",
+            reply_markup=back_button(),
+        )
+
+    elif query.data == "radhe":
+        await query.edit_message_text(
+            "🙏 Radhe Radhe ❤️",
+            reply_markup=back_button(),
+        )
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    if not update.message or not update.message.text:
-            return
-    msg = update.message.text.lower()
+    text = update.message.text.lower().strip()
 
-    if "hello" in msg or "hi" in msg:
-        reply = "Namaste! 👋 Kaise hain aap?"
-    elif "kaise ho" in msg or "kese ho" in msg or "kya haal hai" in msg or "how are you" in msg:
-        reply = random.choice([
-    "Main bilkul badhiya hoon 😊",
-    "Ekdam mast 😄 Aap batao?",
-    "Sab badhiya ❤️ Aap kaise ho?",
-    "Main theek hoon 😊 Aap sunaiye?"
-])
-   
-    elif (
-    "shubham kaha hai" in msg
-    or "shubham kahan hai" in msg
-    or "shubham kaha par hai" in msg
-    or "shubham kahan par hai "in msg
-):   
-        reply = "Shubham abhi busy hai 😊"
-    elif "naam" in msg:
-        reply = "Mera naam Shubham Help Bot hai 🤖"
-    elif "help" in msg:
-        reply = "Ji 😊 Bataiye, main aapki kya help karun?"
-    elif "thank" in msg:
-        reply = "Aapka swagat hai ❤️"
-    elif (
-    "kya kar rahe ho" in msg
-    or "kya kr rahe ho" in msg
-    or "kya kar rhe ho" in msg
-    or "kya kr rhe ho" in msg
-    ):
-            reply = random.choice([
-        "Bas aapse baat kar raha hoon 😊",
-        "Kuch khaas nahi 😄 Aap kya kar rahe ho?",
-        "Aapke message ka wait kar raha tha 😁",
-        "Bas time pass 😎 Aap sunao?"
-    ])
+    if text in ("hi", "hello", "hey"):
+        await update.message.reply_text(
+            "Namaste! 👋\nKaise help kar sakta hoon? 😊"
+        )
 
-   
-    elif "aur batao" in msg or "kya chal raha hai" in msg or "what's up" in msg or "whats up" in msg:
-           reply = random.choice([
-        "Bas badhiya 😊 Aap batao?",
-        "Sab mast chal raha hai 😄 Aap sunaiye?",
-        "Kuch khaas nahi 😊 Aapse baat kar raha hoon.",
-        "Sab first class 😎 Aapke kya haal hain?"
-    ])
-    elif "good morning" in msg:
-        reply = "Good morning ☀️ Aapka din shubh ho 😊"
-        
+    elif text in ("namaste", "namaskar"):
+        await update.message.reply_text(
+            "🙏 Namaste!\nShubham Help Bot me aapka swagat hai."
+        )
 
-    elif "good night" in msg:
-        reply = "Good night 🌙 Sweet dreams!"
+    elif text in ("radhe radhe", "radhey radhey"):
+        await update.message.reply_text("🙏 Radhe Radhe ❤️")
+    elif any(x in text for x in ("kya kar rahe ho", "kya kr rahe ho", "kya kar rhe ho", "kya kr rhe ho")):
+        replies = [
+            "Bas aapse baat kar raha hoon 😄❤️",
+            "Kuch khaas nahi, aapka message dekh raha hoon 😎",
+            "Bas yahin hoon, aapse chatting kar raha hoon 😊",
+            "Aapka reply dene me busy hoon 🤖❤️"
+        ]
+        await update.message.reply_text(random.choice(replies))
 
-    elif "kahan ho" in msg:
-        reply = "Main yahin hoon, aapke Telegram bot mein 🤖"
+    elif "kaise ho" in text:
+        replies = [
+            "Main bilkul badhiya hoon 😊 Aap batao?",
+            "Ekदम mast hoon 😄❤️ Aap kaise ho?",
+            "Bilkul fine! 😎 Aapka kya haal hai?",
+            "Main badhiya hoon 😊 Aapse baat karke aur bhi achha lag raha hai ❤️"
+        ]
+        await update.message.reply_text(random.choice(replies))
 
-    elif "khana kha liya" in msg:
-        reply = "Haan 😊 Aapne khana kha liya?"
+    elif "kahan ho" in text:
+        await update.message.reply_text("Yahin hoon 😎 Aapse baat kar raha hoon.")
+    elif text in ("haan", "ha", "yes", "ok", "okay"):
+        replies = [
+            "Haan ji 😊❤️",
+            "Bilkul 😄",
+            "Okay 👍❤️",
+            "Ji haan 😎"
+        ]
+        await update.message.reply_text(random.choice(replies))
 
-    elif "kya hua" in msg:
-        reply = "Kuch nahi 😊 Aap bataiye kya hua?"
+    elif text in ("nahi", "na", "no"):
+        replies = [
+            "Achha 😄",
+            "Koi baat nahi ❤️",
+            "Theek hai 😊",
+            "Okay, samajh gaya 👍"
+        ]
+        await update.message.reply_text(random.choice(replies))
 
-    elif "busy ho" in msg:
-        reply = "Nahi 😊 Aapke liye available hoon."
+    elif text in ("lol", "haha", "hahaha"):
+        replies = [
+            "😂😂 Hahaha!",
+            "Haha 😄❤️",
+            "Aap bhi na 😂"
+        ]
+        await update.message.reply_text(random.choice(replies))
 
-    elif "good afternoon" in msg:
-        reply = "Good afternoon ☀️ Aapka din accha ja raha ho!"
+    elif text in ("ok", "okay"):
+        await update.message.reply_text("Okay 😊👍")
+        await update.message.reply_text(
+            "Yahin hoon 😎 Aapse baat kar raha hoon."
+        )
 
-    elif "good evening" in msg:
-        reply = "Good evening 🌆 Kaise hain aap?"
+    elif "good morning" in text:
+        await update.message.reply_text(
+            "Good morning 🌅❤️ Aapka din shandar rahe!"
+        )
 
+    elif "good night" in text:
+        await update.message.reply_text(
+            "Good night 🌙❤️ Sweet dreams!"
+        )
 
-    elif "dost banoge" in msg or "dost bnoge" in msg or "dost banoge kya" in msg:
-        reply = "Bilkul 😊 Hum dost hain."
+    elif text in ("bye", "goodbye"):
+        await update.message.reply_text(
+            "Bye 👋❤️ Phir milte hain!"
+        )
+    elif "thank" in text or "thanks" in text:
+        await update.message.reply_text(
+            "You're most welcome 😊❤️"
+        )
 
-    elif "miss you" in msg:
-        reply = "Aww 😊 Main yahin hoon."
+    elif "kya haal hai" in text:
+        await update.message.reply_text(
+            "Bilkul badhiya 😄 Aapka kya haal hai?"
+        )
 
-    elif "sorry" in msg:
-        reply = "Koi baat nahi 😊"
+    elif "kya chal raha hai" in text:
+        await update.message.reply_text(
+            "Bas sab badhiya chal raha hai 😎❤️"
+        )
 
-    elif "kaun ho" in msg:
-        reply = "Main Shubham Help Bot hoon 🤖"
+    elif "tumhara naam kya hai" in text or "aapka naam kya hai" in text:
+        await update.message.reply_text(
+            "Mera naam Shubham Help Bot hai 🤖❤️"
+        )
 
-    elif "kya haal hai" in msg:
-        reply = "Sab badhiya hai 😊 Aap bataiye?"
+    elif "tum kaun ho" in text or "aap kaun ho" in text:
+        await update.message.reply_text(
+            "Main Shubham Help Bot hoon 🤖😊"
+        )
 
-    elif "love you" in msg:
-        reply = "Aap bahut sweet hain 😊❤️"
-    elif "bye" in msg:
-        reply = "Bye 👋 Phir milte hain!"
-    elif "kon ho" in msg:
-      reply = "Main Shubham Help Bot hoon 🤖"
+    elif "miss you" in text:
+        await update.message.reply_text(
+            "Aww 😊❤️ Main yahin hoon!"
+        )
+    elif any(x in text for x in ("khana kha liya", "khana khaya", "khaana kha liya", "khaana khaya")):
+        await update.message.reply_text(random.choice(["Haan ji 😄 Aapne kha liya?", "Haan 😊 Khana kha liya. Aapne?", "Ji haan ❤️ Aapne khana khaya?"]))
 
-    elif "thank" in msg or "thanks" in msg:
-        reply = "Aapka swagat hai 😊❤️"
+    elif any(x in text for x in ("shubham kaha hai", "shubham kahan hai", "shubham kaha par hai", "shubham kahan par hai")):
+        await update.message.reply_text(random.choice(["Shubham yahin hai 😊", "Shubham abhi yahin hai 😄", "Yahin hai ❤️ Aapse baat kar raha hai."]))
 
-    elif "good morning" in msg:
-        reply = "Good morning! ☀️ Aapka din shubh ho 😊"
+    elif any(x in text for x in ("kya hua", "kya hua hai")):
+        await update.message.reply_text(random.choice(["Kuch nahi 😊 Sab badhiya hai.", "Kuch khaas nahi 😄", "Sab theek hai ❤️"]))
 
-    elif "good night" in msg:
-        reply = "Good night! 🌙 Sweet dreams 😊"
-   
+    elif any(x in text for x in ("kahan ja rahe ho", "kaha ja rahe ho")):
+        await update.message.reply_text(random.choice(["Abhi kahin nahi 😄", "Bas thoda bahar ja raha hoon 😊", "Abhi yahin hoon ❤️"]))
 
-    elif "kya kar rahe ho" in msg:
-        reply = "Bas aapse baat kar raha hoon 😊"
-
-    elif "naam kya hai" in msg or "aapka naam" in msg:
-        reply = "Mera naam Shubham Help Bot hai 🤖"
-
-    elif "kaise ho" in msg:
-        reply = "Main bilkul badhiya hoon 😊 Aap kaise hain?"
-
-    elif "welcome" in msg:
-        reply = "Thank you 😊❤️"
-
-    elif "ok" in msg or "okay" in msg:
-        reply = "Ji bilkul 😊"
-    elif "radhe radhe" in msg:
-        reply = "Radhe Radhe 🙏❤️"
-
-    elif "good afternoon" in msg:
-        reply = "Good afternoon ☀️ Kaise hain aap?"
-
-    elif "good evening" in msg:
-        reply = "Good evening 🌆 Aapka din kaisa raha?"
-
-    elif "kaha ho" in msg or "kahan ho" in msg:
-        reply = "Main yahin hoon 😊"
-
-    elif "kya hua" in msg:
-        reply = "Kuch nahi 😊 Aap bataiye kya hua?"
-    elif "busy ho" in msg:
-        reply = "Nahi 😊 Aap bataiye."
-
-    elif "khana kha liya" in msg or "khana khaya" in msg:
-        reply = "Haan 😊 Aapne khana kha liya?"
-
-    elif "miss you" in msg:
-        reply = "Aww 😊 Main yahin hoon."
-
-    elif "dost banoge" in msg or "friend banoge" in msg:
-        reply = "Bilkul 😊 Hum dost hain."
-
-    elif "sorry" in msg:
-        reply = "Koi baat nahi 😊"
     else:
-        reply = "Hmm 😊 Main is message ko abhi samajh nahi paya. Aap thoda simple likhiye."
+        replies = [
+            "Hmm 😊 Iske baare mein thoda aur batao.",
+            "Achha 😄 Phir aage batao...",
+            "Samajh raha hoon 😊",
+            "Ohh 😎 Interesting!",
+            "Haha 😄 Aapki baat interesting hai ❤️"
+        ]
+        await update.message.reply_text(random.choice(replies))
+def main():
+    app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
-    await update.message.reply_text(reply)
-    user = update.effective_user
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("help", help_command))
+    app.add_handler(CommandHandler("about", about_command))
+    app.add_handler(CommandHandler("contact", contact_command))
 
-    if user.id != ADMIN_ID:
-        username = f"@{user.username}" if user.username else "No username"
+    app.add_handler(CallbackQueryHandler(button_handler))
 
-        notify_text = (
-            f"📩 New message\n"
-            f"Name: {user.full_name}\n"
-            f"User ID: {user.id}\n"
-            f"Username: {username}\n"
-            f"Message: {update.message.text}\n"
-            f"Bot reply: {reply}"
-        )
+    app.add_handler(
+        MessageHandler(filters.TEXT & ~filters.COMMAND, auto_reply)
+    )
+    print("Bot started...")
+    app.run_polling()
 
-        await context.bot.send_message(
-            chat_id=ADMIN_ID,
-            text=notify_text
-        )
-
-app = Application.builder().token(TOKEN).build()
-
-app.add_handler(CommandHandler("start", start))
-app.add_handler(CommandHandler("help", help_command))
-app.add_handler(CommandHandler("myid", myid))
-app.add_handler(CommandHandler("reply", manual_reply))
-app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, auto_reply))
-
-print("Bot started...")
-app.run_polling()
+if __name__ == "__main__":
+    main()
