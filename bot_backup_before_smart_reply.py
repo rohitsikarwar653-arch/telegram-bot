@@ -247,6 +247,13 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Bas sab badhiya chal raha hai 😎❤️"
         )
 
+    elif "mujhe yaad rakhte ho" in text or "mujhe yaad hai" in text:
+        name = context.user_data.get("name")
+        if name:
+            await update.message.reply_text(f"Haan 😊❤️ Mujhe yaad hai, aap {name} ho!")
+        else:
+            await update.message.reply_text("Abhi mujhe aapka naam yaad nahi hai 😊")
+
     elif "mera naam bhool jao" in text or "naam bhool jao" in text:
         if context.user_data.get("name"):
             context.user_data.pop("name", None)
