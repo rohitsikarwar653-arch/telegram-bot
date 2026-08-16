@@ -1339,6 +1339,22 @@ async def remind_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     asyncio.create_task(reminder_task())
 
 
+async def ping_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    import time
+
+    start_time = time.perf_counter()
+
+    await update.message.chat.send_action("typing")
+
+    elapsed = (time.perf_counter() - start_time) * 1000
+
+    await update.message.reply_text(
+        "🏓 Pong!\n\n"
+        "🟢 Bot is online\n"
+        f"⚡ Response: {elapsed:.0f} ms"
+    )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1435,6 +1451,7 @@ def main():
     app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("broadcast", broadcast_command))
     app.add_handler(CommandHandler("profile", profile_command))
+    app.add_handler(CommandHandler("ping", ping_command))
     app.add_handler(CommandHandler("remind", remind_command))
     app.add_handler(CommandHandler("reset", reset_command))
     app.add_handler(CommandHandler("block", block_command))
