@@ -274,6 +274,32 @@ async def send_reply(update: Update, text: str, delay: float = 0.7, **kwargs):
     await update.message.reply_text(text, **kwargs)
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    emoji_replies = {
+        "😂": "🤣🤣",
+        "🤣": "😂❤️",
+        "❤️": "❤️😊",
+        "❤": "❤️😊",
+        "😍": "🥰❤️",
+        "😘": "😘❤️",
+        "👍": "👍😎",
+        "🔥": "🔥🔥",
+        "😢": "❤️🥺",
+        "😭": "🥺❤️",
+        "😎": "😎🔥",
+        "🙏": "🙏❤️",
+        "😊": "😊❤️",
+        "😡": "😅❤️",
+        "🤔": "😄",
+    }
+
+    if update.message and update.message.text:
+        emoji_text = update.message.text.strip()
+
+        if emoji_text in emoji_replies:
+            await send_reply(update, emoji_replies[emoji_text])
+            return
+
+
     if await owner_message_reply(update, context):
         return
 
