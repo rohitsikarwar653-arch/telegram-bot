@@ -1461,6 +1461,37 @@ async def setbio_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def mystats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    profiles = context.application.bot_data.setdefault("profiles", {})
+    profile = profiles.get(user.id)
+
+    if not profile:
+        profile = {
+            "name": user.full_name,
+            "username": user.username,
+            "messages": 0,
+            "bio": "",
+        }
+        profiles[user.id] = profile
+
+    username = (
+        f"@{profile.get('username')}"
+        if profile.get("username")
+        else "No username"
+    )
+
+    await send_reply(
+        update,
+        "📊 My Stats\n\n"
+        f"👤 Name: {profile.get('name', user.full_name)}\n"
+        f"📱 Username: {username}\n"
+        f"🆔 ID: {user.id}\n"
+        f"📩 Messages: {profile.get('messages', 0)}\n"
+        "🤖 Status: Active ✅"
+    )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1591,6 +1622,7 @@ def main():
     app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("broadcast", broadcast_command))
     app.add_handler(CommandHandler("profile", profile_command))
+    app.add_handler(CommandHandler("mystats", mystats_command))
     app.add_handler(CommandHandler("setbio", setbio_command))
     app.add_handler(CommandHandler("setname", setname_command))
     app.add_handler(CommandHandler("commands", commands_command))
