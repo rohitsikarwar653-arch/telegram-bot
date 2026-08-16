@@ -118,6 +118,14 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
+    if text.startswith("mera naam ") and text.endswith(" hai"):
+        name = text[9:-4].strip().title()
+        if name:
+            context.user_data["name"] = name
+            await update.message.reply_text(
+                f"Achha {name} 😊❤️ Ab mujhe aapka naam yaad rahega!"
+            )
+            return
 
     if text in ("hi", "hello", "hey"):
         replies = [
@@ -149,15 +157,21 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(random.choice(replies))
 
     elif "kaise ho" in text:
-        replies = [
-            "Main bilkul badhiya hoon 😊 Aap batao?",
-            "Ekदम mast hoon 😄❤️ Aap kaise ho?",
-            "Bilkul fine! 😎 Aapka kya haal hai?",
-            "Main badhiya hoon 😊 Aapse baat karke aur bhi achha lag raha hai ❤️",
-            "Mast chal raha hai 😄 Aap sunao, sab theek?",
-            "Bilkul fit hoon 🤖❤️ Aapki kya khabar hai?",
-            "Badhiya hoon 😊 Bas aapse baat kar raha hoon."
-        ]
+        name = context.user_data.get("name")
+        if name:
+            replies = [
+                f"Main bilkul badhiya hoon 😊❤️ Aap batao, {name}?",
+                f"Ekदम mast hoon 😄 {name}, aap kaise ho?",
+                f"Bilkul fine! 😎 Aapka kya haal hai, {name}?",
+                f"Main badhiya hoon ❤️ Aapse baat karke aur bhi achha lag raha hai, {name}.",
+                f"Mast chal raha hai 😄 Aap sunao, {name}?"
+            ]
+        else:
+            replies = [
+                "Main bilkul badhiya hoon 😊 Aap batao?",
+                "Ekदम mast hoon 😄❤️ Aap kaise ho?",
+                "Bilkul fine! 😎 Aapka kya haal hai?"
+            ]
         await update.message.reply_text(random.choice(replies))
 
     elif "kahan ho" in text:
