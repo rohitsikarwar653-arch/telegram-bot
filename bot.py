@@ -1385,8 +1385,19 @@ def main():
 
     async def id_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         user = update.effective_user
-        await send_reply(update, 
-            f"🆔 Your Telegram ID: {user.id}"
+
+        username = (
+            f"@{user.username}"
+            if user.username
+            else "No username"
+        )
+
+        await send_reply(
+            update,
+            "👤 User Information\n\n"
+            f"📝 Name: {user.full_name}\n"
+            f"📱 Username: {username}\n"
+            f"🆔 Telegram ID: {user.id}"
         )
 
 
