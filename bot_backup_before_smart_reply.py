@@ -1,5 +1,17 @@
 import random
 import os
+import threading
+from flask import Flask
+
+web_app = Flask(__name__)
+
+@web_app.route("/")
+def home():
+    return "Telegram Bot is running!"
+
+def run_web():
+    port = int(os.environ.get("PORT", 10000))
+    web_app.run(host="0.0.0.0", port=port)
 from telegram import Update
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
@@ -253,6 +265,8 @@ def main():
     app.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND, auto_reply)
     )
+    
+threading.Thread(target=run_web, daemon=True).start()
     print("Bot started...")
     app.run_polling()
 
