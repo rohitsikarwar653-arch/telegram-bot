@@ -108,9 +108,14 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
 
     if text in ("hi", "hello", "hey"):
-        await update.message.reply_text(
-            "Namaste! 👋\nKaise help kar sakta hoon? 😊"
-        )
+        replies = [
+            "Hey 😊❤️ Kaise ho?",
+            "Hello 👋😄 Kya haal hai?",
+            "Hi 😊 Main yahin hoon.",
+            "Heyy 😎❤️ Batao kya chal raha hai?",
+            "Hello ji 😊 Aapse baat karke achha laga ❤️"
+        ]
+        await update.message.reply_text(random.choice(replies))
 
     elif text in ("namaste", "namaskar"):
         await update.message.reply_text(
