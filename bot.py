@@ -58,10 +58,21 @@ async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def about_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     await update.message.reply_text(
-        "ℹ️ About\n\n"
-        "Ye Shubham Help Bot hai. 🤖❤️\n"
-        "Aap menu buttons ya commands ka use kar sakte hain.",
-        reply_markup=back_button(),
+        "ℹ️ About Shubham Help Bot\n\n"
+        "🤖 Name: Shubham Help Bot\n"
+        "✨ Version: 2.0\n\n"
+        "🚀 Features:\n"
+        "• Smart & natural replies 💬\n"
+        "• Custom personality 😎\n"
+        "• Conversation context 🧠\n"
+        "• User profiles 👤\n"
+        "• Message notifications 🔔\n"
+        "• Owner reply system ↩️\n"
+        "• Broadcast 📢\n"
+        "• User management 🔒\n"
+        "• Interactive menu 📋\n\n"
+        "👤 Owner: @MR_ALONE141\n\n"
+        "❤️ Made with Python & Telegram"
     )
 
 async def contact_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
