@@ -163,6 +163,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "👤 Your Profile\n\n"
             f"📝 Name: {profile['name']}\n"
             f"📱 Username: {username}\n"
+            f"📝 Bio: {profile.get('bio', 'No bio set')}\n"
             f"🆔 ID: {user.id}\n"
             f"📩 Messages: {profile.get('messages', 0)}"
         )
@@ -1420,6 +1421,46 @@ async def setname_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def setbio_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    profiles = context.application.bot_data.setdefault("profiles", {})
+
+    if not context.args:
+        await send_reply(
+            update,
+            "✏️ Apna bio likhiye.\n\n"
+            "Example:\n"
+            "/setbio Always positive ❤️"
+        )
+        return
+
+    new_bio = " ".join(context.args).strip()
+
+    if len(new_bio) > 150:
+        await send_reply(
+            update,
+            "❌ Bio maximum 150 characters ka ho sakta hai."
+        )
+        return
+
+    profile = profiles.setdefault(
+        user.id,
+        {
+            "name": user.full_name,
+            "username": user.username,
+            "messages": 0,
+        }
+    )
+
+    profile["bio"] = new_bio
+
+    await send_reply(
+        update,
+        f"✅ Bio update ho gaya!\n\n"
+        f"📝 Bio: {new_bio}"
+    )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1550,6 +1591,7 @@ def main():
     app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("broadcast", broadcast_command))
     app.add_handler(CommandHandler("profile", profile_command))
+    app.add_handler(CommandHandler("setbio", setbio_command))
     app.add_handler(CommandHandler("setname", setname_command))
     app.add_handler(CommandHandler("commands", commands_command))
     app.add_handler(CommandHandler("ping", ping_command))
