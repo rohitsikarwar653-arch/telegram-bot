@@ -275,6 +275,34 @@ async def send_reply(update: Update, text: str, delay: float = 0.7, **kwargs):
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message and update.message.text:
+        compliment_text = update.message.text.lower().strip()
+
+        compliment_triggers = (
+            "compliment me",
+            "say something nice",
+            "meri tareef karo",
+            "tareef karo",
+            "meri tarif karo",
+            "tarif karo",
+        )
+
+        if any(trigger in compliment_text for trigger in compliment_triggers):
+            import random
+
+            compliments = [
+                "✨ Aapki personality hi alag hai! 😎❤️",
+                "🌟 Aap mein ek positive vibe hai jo easily notice ho jaati hai. ❤️",
+                "👑 Aap simple ho, lekin presence strong hai. 🔥",
+                "😊 Aapki smile kisi ka bhi mood better kar sakti hai. ❤️",
+                "💫 Aap jitne genuine ho, utne hi special ho. ✨",
+                "😎 Aapki vibe hi aisi hai ki attention automatically mil jaata hai. 🔥",
+            ]
+
+            await send_reply(update, random.choice(compliments))
+            return
+
+
+    if update.message and update.message.text:
         mood_text = update.message.text.lower().strip()
 
         mood_replies = {
