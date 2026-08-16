@@ -1380,6 +1380,46 @@ async def commands_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def setname_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    profiles = context.application.bot_data.setdefault("profiles", {})
+
+    if not context.args:
+        await send_reply(
+            update,
+            "✏️ Apna new name likhiye.\n\n"
+            "Example:\n"
+            "/setname Shubham"
+        )
+        return
+
+    new_name = " ".join(context.args).strip()
+
+    if len(new_name) > 50:
+        await send_reply(
+            update,
+            "❌ Name maximum 50 characters ka ho sakta hai."
+        )
+        return
+
+    profile = profiles.setdefault(
+        user.id,
+        {
+            "name": user.full_name,
+            "username": user.username,
+            "messages": 0,
+        }
+    )
+
+    profile["name"] = new_name
+
+    await send_reply(
+        update,
+        f"✅ Profile name update ho gaya!\n\n"
+        f"👤 New Name: {new_name}"
+    )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1510,6 +1550,7 @@ def main():
     app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("broadcast", broadcast_command))
     app.add_handler(CommandHandler("profile", profile_command))
+    app.add_handler(CommandHandler("setname", setname_command))
     app.add_handler(CommandHandler("commands", commands_command))
     app.add_handler(CommandHandler("ping", ping_command))
     app.add_handler(CommandHandler("remind", remind_command))
