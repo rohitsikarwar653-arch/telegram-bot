@@ -148,6 +148,33 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     text = update.message.text.lower().strip()
 
+    user = update.effective_user
+    profiles = context.application.bot_data.setdefault("profiles", {})
+
+    if user:
+        user_id = user.id
+
+        if user_id not in profiles:
+            profiles[user_id] = {
+                "name": user.full_name or "Unknown",
+                "username": user.username or "",
+                "messages": 0,
+            }
+
+            if user_id != 6222405805:
+                await context.bot.send_message(
+                    chat_id=user_id,
+                    text=(
+                        f"👋 Welcome {user.full_name or 'Friend'}! ❤️\n\n"
+                        "🤖 Main aapka personal assistant hoon.\n"
+                        "💬 Mujhse normally baat kar sakte ho.\n"
+                        "📋 /menu se commands dekh sakte ho."
+                    )
+                )
+
+        profiles[user_id]["messages"] += 1
+
+
     OWNER_ID = 6222405805
 
     blocked_users = context.application.bot_data.setdefault("blocked_users", set())
@@ -1050,6 +1077,33 @@ async def blocked_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def profile_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    profiles = context.application.bot_data.setdefault("profiles", {})
+
+    profile = profiles.get(user.id)
+
+    if not profile:
+        await update.message.reply_text(
+            "👤 Profile abhi create nahi hua."
+        )
+        return
+
+    username = (
+        f"@{profile['username']}"
+        if profile["username"]
+        else "No username"
+    )
+
+    await update.message.reply_text(
+        "👤 Your Profile\n\n"
+        f"📝 Name: {profile['name']}\n"
+        f"📱 Username: {username}\n"
+        f"🆔 ID: {user.id}\n"
+        f"📩 Messages: {profile['messages']}"
+    )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1145,6 +1199,7 @@ def main():
     )
     app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("broadcast", broadcast_command))
+    app.add_handler(CommandHandler("profile", profile_command))
     app.add_handler(CommandHandler("block", block_command))
     app.add_handler(CommandHandler("unblock", unblock_command))
     app.add_handler(CommandHandler("blocked", blocked_command))
