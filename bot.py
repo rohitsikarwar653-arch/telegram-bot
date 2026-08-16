@@ -107,6 +107,39 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
 
+    if text in ("kya kr rha", "kya kr rahe", "kya kar rhe", "kya kar rha"):
+        await update.message.reply_text("Bas online hoon 😄❤️ Aapse baat kar raha hoon.")
+        return
+
+    if text in ("what are you doing", "what r u doing", "what you doing"):
+        await update.message.reply_text("Just chatting with you 😊❤️")
+        return
+
+    if text in ("where are you", "where r u", "wru"):
+        await update.message.reply_text("I'm right here 😊❤️")
+        return
+
+    if text in ("how r u", "how are u", "how r you"):
+        await update.message.reply_text("I'm doing great 😊❤️ How about you?")
+        return
+
+    if text in ("what's your name", "whats your name", "your name"):
+        await update.message.reply_text("I'm Shubham Help Bot 🤖❤️")
+        return
+
+    if text in ("are you there", "u there", "you there"):
+        await update.message.reply_text("Yes 😄❤️ I'm here!")
+        return
+
+    if text in ("talk to me", "baat karo", "mujhse baat karo"):
+        await update.message.reply_text("Bilkul 😊❤️ Chalo baat karte hain!")
+        return
+
+    if text in ("tell me something", "kuch sunao", "kuch bolo"):
+        await update.message.reply_text("Aap smile karo 😊❤️ Baaki baat baad mein!")
+        return
+
+
     if text in ("radhe radhe", "radhey radhey", "radhe"):
         await update.message.reply_text("🙏 Radhe Radhe ❤️🌸")
         return
@@ -683,14 +716,20 @@ def main():
 
     async def menu_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(
-            "🤖 Shubham Bot Commands\n\n"
-            "/start - Main Menu\n"
-            "/help - Help\n"
-            "/joke - Random Joke 😂\n"
-            "/quote - Motivational Quote ✨\n"
-            "/love - Special Reply ❤️\n"
-            "/radhe - Radhe Radhe 🙏\n"
-            "/menu - Commands List 📋"
+            "🤖 Shubham Help Bot\n\n"
+            "📋 Available Commands\n\n"
+            "/start - 🏠 Main Menu\n"
+            "/help - 🤖 Help Menu\n"
+            "/about - ℹ️ About Bot\n"
+            "/contact - 📩 Contact\n"
+            "/joke - 😂 Random Joke\n"
+            "/quote - ✨ Motivational Quote\n"
+            "/love - ❤️ Special Reply\n"
+            "/radhe - 🙏 Radhe Radhe\n"
+            "/status - 🟢 Bot Status\n"
+            "/id - 🆔 Your Telegram ID\n"
+            "/menu - 📋 Commands List\n\n"
+            "💬 Aap normal messages bhi bhej sakte hain!"
         )
 
 
