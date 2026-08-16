@@ -39,13 +39,21 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    keyboard = [
+        [
+            InlineKeyboardButton("👤 Profile", callback_data="menu_profile"),
+            InlineKeyboardButton("📊 Stats", callback_data="menu_stats"),
+        ],
+        [
+            InlineKeyboardButton("📋 Commands", callback_data="menu_commands"),
+            InlineKeyboardButton("📩 Contact Owner", callback_data="menu_contact"),
+        ],
+    ]
+
     await update.message.reply_text(
         "🤖 Help Menu\n\n"
-        "/start - Main menu\n"
-        "/help - Help menu\n"
-        "/about - Bot ke baare mein\n"
-        "/contact - Contact information",
-        reply_markup=back_button(),
+        "Neeche se option choose kijiye ❤️",
+        reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
 async def about_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -81,6 +89,62 @@ async def owner_reply_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
 
 
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    if query.data == "menu_profile":
+        profiles = context.application.bot_data.get("profiles", {})
+        profile = profiles.get(update.effective_user.id)
+
+        if profile:
+            username = (
+                f"@{profile['username']}"
+                if profile["username"] else "No username"
+            )
+            await query.message.reply_text(
+                "👤 Your Profile\n\n"
+                f"📝 Name: {profile['name']}\n"
+                f"📱 Username: {username}\n"
+                f"🆔 ID: {update.effective_user.id}\n"
+                f"📩 Messages: {profile['messages']}"
+            )
+        else:
+            await query.message.reply_text(
+                "👤 Profile abhi create nahi hua."
+            )
+        return
+
+    if query.data == "menu_stats":
+        stats = context.application.bot_data.get(
+            "stats", {"messages": 0, "users": set()}
+        )
+        await query.message.reply_text(
+            "📊 Bot Statistics\n\n"
+            f"📩 Total Messages: {stats['messages']}\n"
+            f"👥 Unique Users: {len(stats['users'])}\n"
+            "🟢 Status: Online"
+        )
+        return
+
+    if query.data == "menu_commands":
+        await query.message.reply_text(
+            "📋 Commands\n\n"
+            "/start - Start bot\n"
+            "/help - Open menu\n"
+            "/menu - Open menu\n"
+            "/profile - Your profile"
+        )
+        return
+
+    if query.data == "menu_contact":
+        await query.message.reply_text(
+            "📩 Contact Owner\n\n"
+            "👤 Owner: @MR_ALONE141\n"
+            "💬 Aap owner ko Telegram par contact kar sakte hain."
+        )
+        return
+
+
     query = update.callback_query
     await query.answer()
 
