@@ -158,6 +158,7 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Bilkul fit hoon 🤖❤️ Aapki kya khabar hai?",
             "Badhiya hoon 😊 Bas aapse baat kar raha hoon."
         ]
+        await update.message.reply_text(random.choice(replies))
 
     elif "kahan ho" in text:
         await update.message.reply_text("Yahin hoon 😎 Aapse baat kar raha hoon.")
