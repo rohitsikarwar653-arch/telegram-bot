@@ -274,6 +274,25 @@ async def send_reply(update: Update, text: str, delay: float = 0.7, **kwargs):
     await update.message.reply_text(text, **kwargs)
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.message and update.message.text:
+        keyword_text = update.message.text.lower().strip()
+
+        keyword_replies = {
+            "good morning": "🌅❤️ Good Morning! Aapka din bahut achha rahe! 😊",
+            "good night": "🌙❤️ Good Night! Sweet dreams! 😊",
+            "love you": "❤️😊 Aww, that's sweet!",
+            "thank you": "You're welcome! 😊❤️",
+            "thanks": "You're welcome! 😊❤️",
+            "congratulations": "🎉❤️ Congratulations! Bahut bahut badhai! 🥳",
+            "radhe radhe": "🙏❤️ Radhe Radhe! 🌸",
+        }
+
+        for keyword, reply in keyword_replies.items():
+            if keyword in keyword_text:
+                await send_reply(update, reply)
+                return
+
+
     emoji_replies = {
         "😂": "🤣🤣",
         "🤣": "😂❤️",
