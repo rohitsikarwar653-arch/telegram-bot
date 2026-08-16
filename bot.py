@@ -107,6 +107,28 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
 
+    OWNER_ID = 6222405805
+
+    if update.effective_user and update.effective_user.id != OWNER_ID:
+        user = update.effective_user
+        username = f"@{user.username}" if user.username else "No username"
+        name = user.full_name or "Unknown"
+
+        try:
+            await context.bot.send_message(
+                chat_id=OWNER_ID,
+                text=(
+                    "🔔 New Message\n\n"
+                    f"👤 Name: {name}\n"
+                    f"📱 Username: {username}\n"
+                    f"🆔 ID: {user.id}\n"
+                    f"💬 Message: {update.message.text}"
+                )
+            )
+        except Exception as e:
+            print(f"Notification error: {e}")
+
+
     history = context.user_data.setdefault("chat_history", [])
     history.append(text)
     if len(history) > 5:
