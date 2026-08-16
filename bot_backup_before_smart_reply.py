@@ -194,9 +194,14 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
     elif "good morning" in text:
-        await update.message.reply_text(
-            "Good morning 🌅❤️ Aapka din shandar rahe!"
-        )
+        replies = [
+            "Good Morning 🌅❤️ Aapka din bahut achha ho!",
+            "Good Morning 😊🌸 Hope aapka din shandaar rahe!",
+            "Good Morning ☀️❤️ Aaj ka din aapke liye special ho!",
+            "Suprabhat 🌅😊 Hamesha khush rahiye!",
+            "Good Morning 😄❤️ Aaj kya plan hai?"
+        ]
+        await update.message.reply_text(random.choice(replies))
 
     elif "good night" in text:
         await update.message.reply_text(
