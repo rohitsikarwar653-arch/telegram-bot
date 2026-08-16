@@ -118,6 +118,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
+    text = text.replace("favourite colour", "favorite color").replace("favourite color", "favorite color").replace("favorite colour", "favorite color")
     if text.startswith("mera naam ") and text.endswith(" hai") and text not in ("mera naam kya hai", "mera naam kya hai?"):
         name = text[9:-4].strip().title()
         if name:
