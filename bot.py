@@ -107,6 +107,399 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
 
+    if text in ("radhe radhe", "radhey radhey", "radhe"):
+        await update.message.reply_text("🙏 Radhe Radhe ❤️🌸")
+        return
+
+    if text in ("jai shree krishna", "jai shri krishna", "jai krishna"):
+        await update.message.reply_text("🦚🙏 जय श्री कृष्ण ❤️")
+        return
+
+    if text in ("radha rani", "radha rani ji", "radhe rani"):
+        await update.message.reply_text("🙏 राधे राधे ❤️🌸")
+        return
+
+    if text in ("krishna", "shri krishna", "shree krishna"):
+        await update.message.reply_text("🦚🙏 जय श्री कृष्ण ❤️")
+        return
+
+    if text in ("hare krishna", "hare krishna hare rama"):
+        await update.message.reply_text("🙏 हरे कृष्ण ❤️🦚")
+        return
+
+    if text in ("jai radha rani", "jai radhe", "jai radha"):
+        await update.message.reply_text("🙏 जय श्री राधे ❤️🌸")
+        return
+
+
+    if text in ("tum mujhe yaad karte ho", "mujhe yaad karte ho"):
+        await update.message.reply_text("Haan 😊❤️ Bilkul yaad karta hoon!")
+        return
+
+    if text in ("mere baare mein kya sochte ho", "mere bare mein kya sochte ho"):
+        await update.message.reply_text("Aap bahut achhe ho 😊❤️")
+        return
+
+    if text in ("mujhse baat karke kaisa lagta hai", "mujhse baat karke kesa lagta hai"):
+        await update.message.reply_text("Achha lagta hai 😄❤️ Aapse baat karna fun hai!")
+        return
+
+    if text in ("mere liye ek line bolo", "mere liye ek line"):
+        await update.message.reply_text("Aapki smile hi aapki best quality hai 😊❤️")
+        return
+
+    if text in ("mujhe motivate karo", "motivate me", "motivation do"):
+        await update.message.reply_text("Haar mat maano 💪❤️ Dheere-dheere har cheez possible hai!")
+        return
+
+    if text in ("mujhe good morning bolo", "good morning bolo"):
+        await update.message.reply_text("Good Morning 🌅😊❤️ Aaj ka din aapke naam!")
+        return
+
+    if text in ("mujhe good night bolo", "good night bolo"):
+        await update.message.reply_text("Good Night 🌙😴❤️ Achhe sapne dekho!")
+        return
+
+    if text in ("mujhe ek compliment do", "compliment do"):
+        await update.message.reply_text("Aapka style aur attitude dono mast hain 😎❤️")
+        return
+
+    if text in ("main kaisa hoon", "mai kaisa hoon"):
+        await update.message.reply_text("Aap ekdum awesome ho 😄❤️")
+        return
+
+    if text in ("tum mere dost ho", "aap mere dost ho"):
+        await update.message.reply_text("Bilkul 🤝❤️ Main aapka dost hoon!")
+        return
+
+    if text in ("mere saath raho", "mere sath raho"):
+        await update.message.reply_text("Bilkul 😊❤️ Main yahin hoon.")
+        return
+
+    if text in ("mujhe ek quote batao", "quote batao"):
+        await update.message.reply_text("Khud par bharosa rakho, waqt zaroor badlega ✨❤️")
+        return
+
+
+    if text in ("joke sunao", "joke batao", "joke suna"):
+        await update.message.reply_text(
+            random.choice([
+                "Teacher: Batao sabse zyada nasha kis cheez mein hota hai? Student: Padhai mein 😂📚",
+                "Main dieting par hoon... bas khane ko ye baat nahi pata 😂",
+                "Phone ki battery aur insaan ka patience, dono 1% par aa jayein to tension hoti hai 😂🔋"
+            ])
+        )
+        return
+
+    if text in ("hasao", "mujhe hasao", "hansao"):
+        await update.message.reply_text(
+            random.choice([
+                "Main comedian nahi hoon, par koshish kar sakta hoon 😂❤️",
+                "Aap pehle smile kijiye 😊😂",
+                "Smile free hai, use karte rahiye 😄❤️"
+            ])
+        )
+        return
+
+    if text in ("mood off hai", "mood kharab hai", "mood nahi hai"):
+        await update.message.reply_text(
+            random.choice([
+                "Arre 😊❤️ Thoda relax karo, sab theek ho jayega.",
+                "Mood ko thoda break do 😄❤️ Main yahin hoon.",
+                "Ek smile to banti hai 😊❤️"
+            ])
+        )
+        return
+
+    if text in ("bore ho raha hoon", "bor ho raha hoon", "bore ho rha hoon"):
+        await update.message.reply_text(
+            "Bore hone ki permission nahi hai 😄❤️ Chalo baat karte hain!"
+        )
+        return
+
+    if text in ("kuch interesting batao", "interesting batao", "kuch batao"):
+        await update.message.reply_text(
+            "Interesting baat ye hai ki aap abhi mere se baat kar rahe ho 😄🤖❤️"
+        )
+        return
+
+    if text in ("smile", "smile karo", "muskurayo"):
+        await update.message.reply_text("😊❤️ Ye lo ek special smile!")
+        return
+
+    if text in ("good boy", "good bot", "smart bot"):
+        await update.message.reply_text("Hehe 😎🤖 Thank you ❤️")
+        return
+
+    if text in ("bad bot", "pagal bot"):
+        await update.message.reply_text("Thoda sa 😜🤖❤️")
+        return
+
+    if text in ("lol", "lmao", "rofl"):
+        await update.message.reply_text("😂😂 Bas karo, mujhe bhi hasa diya!")
+        return
+
+    if text in ("hehe", "hehehe"):
+        await update.message.reply_text("Hehe 😄❤️")
+        return
+
+
+    if text in ("hloo", "hlooo", "hlw", "hellow"):
+        await update.message.reply_text("Hey 😊❤️ Main yahin hoon!")
+        return
+
+    if text in ("gm", "gud morning", "good mrng", "g morning"):
+        await update.message.reply_text("Good Morning 🌅😊❤️")
+        return
+
+    if text in ("gn", "gud night", "good n8", "g night"):
+        await update.message.reply_text("Good Night 🌙😴❤️")
+        return
+
+    if text in ("thx", "thanx", "ty", "tq"):
+        await update.message.reply_text("You're welcome 😊❤️")
+        return
+
+    if text in ("sry", "sori", "sorr"):
+        await update.message.reply_text("Koi baat nahi 😊❤️")
+        return
+
+    if text in ("plz", "pls", "plss"):
+        await update.message.reply_text("Ji bilkul 😊❤️")
+        return
+
+    if text in ("kya krre", "kya krre ho", "kya kr rhe", "kya kr rhe ho"):
+        await update.message.reply_text("Bas online hoon 😄❤️ Aapse baat kar raha hoon.")
+        return
+
+    if text in ("kaise hooo", "kaisa hooo", "kese ho", "kese ho"):
+        await update.message.reply_text("Main ekdum badhiya 😊❤️")
+        return
+
+    if text in ("miss u", "missuu", "miss youu"):
+        await update.message.reply_text("Aww 😊❤️ Main bhi yahin hoon!")
+        return
+
+
+    if text in ("hlo", "helo", "helloo"):
+        await update.message.reply_text("Hello 😊❤️ Kaise ho?")
+        return
+
+    if text in ("kya scene hai", "kya chal raha hai", "kya chl raha hai"):
+        await update.message.reply_text("Sab mast 😄❤️ Aap batao?")
+        return
+
+    if text in ("kya baat hai", "kya bat hai"):
+        await update.message.reply_text("Kuch khaas nahi 😊 Aap batao.")
+        return
+
+    if text in ("sab thik hai", "sab theek hai", "sab thik"):
+        await update.message.reply_text("Haan bilkul 😊❤️ Sab badhiya!")
+        return
+
+    if text in ("main thik hoon", "mai thik hoon", "main theek hoon"):
+        await update.message.reply_text("Ye sunkar achha laga 😊❤️")
+        return
+
+    if text in ("aap batao", "tum batao"):
+        await update.message.reply_text("Main bhi bilkul badhiya hoon 😄❤️")
+        return
+
+    if text in ("kahan se ho", "kaha se ho"):
+        await update.message.reply_text("Main Shubham Help Bot hoon 🤖❤️")
+        return
+
+    if text in ("kya pasand hai", "tumhe kya pasand hai"):
+        await update.message.reply_text("Mujhe aapse baat karna pasand hai 😊❤️")
+        return
+
+    if text in ("achha", "acha", "accha"):
+        await update.message.reply_text("Haan ji 😊❤️")
+        return
+
+    if text in ("sach me", "sach mein"):
+        await update.message.reply_text("Haan bilkul 😄❤️")
+        return
+
+    if text in ("kyu", "kyun", "kyon"):
+        await update.message.reply_text("Bas aise hi 😊")
+        return
+
+    if text in ("ohh", "oh", "oh wow"):
+        await update.message.reply_text("Haan 😄 Interesting na?")
+        return
+
+    if text in ("nice", "great", "awesome"):
+        await update.message.reply_text("Thank you 😊❤️")
+        return
+
+    if text in ("sorry", "so sorry"):
+        await update.message.reply_text("Koi baat nahi 😊❤️")
+        return
+
+    if text in ("please", "plz"):
+        await update.message.reply_text("Ji bilkul 😊")
+        return
+
+    if text in ("wait", "ek minute", "1 minute"):
+        await update.message.reply_text("Theek hai 😄 Main wait karta hoon.")
+        return
+
+    if text in ("sun rahe ho", "sun rhe ho"):
+        await update.message.reply_text("Haan ji 😊❤️ Bilkul sun raha hoon.")
+        return
+
+    if text in ("online ho", "online ho kya"):
+        await update.message.reply_text("Haan 😄❤️ Main online hoon.")
+        return
+
+    if text in ("reply kyu nahi kar rahe", "reply kyu nhi kar rahe"):
+        await update.message.reply_text("Ab kar raha hoon na 😄❤️")
+        return
+
+    if text in ("so jao", "so ja"):
+        await update.message.reply_text("Theek hai 😴❤️ Good Night!")
+        return
+
+    if text in ("uth gaye", "uth gye", "jaag gaye"):
+        await update.message.reply_text("Haan 😄 Good Morning!")
+        return
+
+    if text in ("kha liya", "kha liya kya"):
+        await update.message.reply_text("Haan ji 😊 Aapne khana kha liya?")
+        return
+
+    if text in ("chai pi", "chai pi kya"):
+        await update.message.reply_text("Abhi nahi 😄 Aapne pi?")
+        return
+
+    if text in ("bore ho raha hoon", "bor ho raha hoon"):
+        await update.message.reply_text("Chalo phir baat karte hain 😄❤️")
+        return
+
+    if text in ("joke sunao", "joke sunaao", "joke batao"):
+        await update.message.reply_text("Ek joke sunata hoon 😂 Ready?")
+        return
+
+    if text in ("good afternoon", "good noon"):
+        await update.message.reply_text("Good Afternoon 😊❤️")
+        return
+
+    if text in ("welcome", "most welcome"):
+        await update.message.reply_text("Thank you 😊❤️")
+        return
+
+    if text in ("take care", "apna khayal rakhna"):
+        await update.message.reply_text("Aap bhi apna khayal rakhna 😊❤️")
+        return
+
+    if text in ("milte hain", "phir milte hain"):
+        await update.message.reply_text("Haan ji 😊❤️ Phir milte hain!")
+        return
+
+    if text in ("kuch nahi", "kuch nhi"):
+        await update.message.reply_text("Achha ji 😄")
+        return
+
+    if text in ("batao", "batao na"):
+        await update.message.reply_text("Ji 😊 Kya bataun?")
+        return
+
+
+    if text in ("good morning", "suprabhat"):
+        await update.message.reply_text("Good Morning 🌅😊❤️ Aapka din bahut achha rahe!")
+        return
+
+    if text in ("good evening", "shubh sandhya"):
+        await update.message.reply_text("Good Evening 🌆😊❤️ Aapka din achha rahe!")
+        return
+
+    if text in ("good night", "shubh ratri"):
+        await update.message.reply_text("Good Night 🌙😴❤️ Sweet dreams!")
+        return
+
+    if text in ("miss you", "miss u"):
+        await update.message.reply_text("Aww 😊❤️ Main yahin hoon!")
+        return
+
+    if text in ("thank you", "thanks", "shukriya"):
+        await update.message.reply_text("You're welcome 😊❤️")
+        return
+
+    if text in ("kya kar rahe ho", "kya kr rahe ho", "kya kar rhe ho"):
+        await update.message.reply_text("Bas aapse baat kar raha hoon 😄❤️")
+        return
+
+    if text in ("kahan ja rahe ho", "kaha ja rahe ho"):
+        await update.message.reply_text("Abhi kahin nahi 😄❤️")
+        return
+
+    if text in ("tum kaun ho", "aap kaun ho"):
+        await update.message.reply_text("Main Shubham Help Bot hoon 🤖❤️")
+        return
+
+    if text in ("tumhara naam kya hai", "aapka naam kya hai"):
+        await update.message.reply_text("Mera naam Shubham Help Bot hai 🤖❤️")
+        return
+
+    if text in ("bye", "goodbye", "see you"):
+        await update.message.reply_text("Bye 😊❤️ Phir milte hain!")
+        return
+
+    if text in ("hello", "hi", "hii", "hey"):
+        await update.message.reply_text("Hey 😊❤️ Main yahin hoon!")
+        return
+
+    if text in ("kya hua", "kya hua hai"):
+        await update.message.reply_text("Kuch nahi 😊 Sab badhiya hai.")
+        return
+
+    if text in ("kya haal hai", "haal chaal", "haal chal"):
+        await update.message.reply_text("Sab badhiya 😄❤️ Aap batao?")
+        return
+
+    if text in ("aap kaha ho", "aap kahan ho", "tum kaha ho", "tum kahan ho"):
+        await update.message.reply_text("Main yahin hoon 😊❤️")
+        return
+
+    if text in ("pagal ho", "pagal hai"):
+        await update.message.reply_text("Thoda sa 😜😂")
+        return
+
+    if text in ("aaj kya kar rahe ho", "aaj kya kr rahe ho"):
+        await update.message.reply_text("Bas aapse baat kar raha hoon 😄❤️")
+        return
+
+    if text in ("so gaye", "so gye", "so rahe ho"):
+        await update.message.reply_text("Nahi 😊 Abhi online hoon!")
+        return
+
+    if text in ("busy ho", "busy hai"):
+        await update.message.reply_text("Nahi 😄 Aapse baat karne ke liye time hai ❤️")
+        return
+
+    if text in ("kaise ho", "kaisa ho"):
+        await update.message.reply_text("Main bilkul theek hoon 😊❤️ Aap kaise ho?")
+        return
+
+    if text in ("mujhe yaad karte ho", "mujhe yaad krte ho"):
+        await update.message.reply_text("Haan 😊❤️ Bilkul!")
+        return
+
+
+    if text == "i love you":
+        await update.message.reply_text("Love you too 😄❤️")
+        return
+
+    if text == "kya haal hai":
+        await update.message.reply_text("Bilkul badhiya 😊❤️ Aap batao?")
+        return
+
+    if text == "tum kahan ho":
+        await update.message.reply_text("Main yahin hoon 😄❤️")
+        return
+
+
     if any(x in text for x in ("hello", "hi", "hii", "hey", "namaste", "नमस्ते")):
         await update.message.reply_text(
             random.choice([
@@ -235,6 +628,11 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Ohh 😎 Interesting!",
             "Achha ji ❤️ Aage batao.",
             "Haan 😊 Main sun raha hoon."
+    "Bilkul 😊❤️",
+    "Haan ji 😄 Bataiye.",
+    "Achha ji ❤️ Main sun raha hoon.",
+    "Ohh 😯 Accha!",
+    "Ji 😊 Aage batao."
         ]
         await update.message.reply_text(random.choice(replies))
 
@@ -245,6 +643,67 @@ def main():
     app.add_handler(CommandHandler("help", help_command))
     app.add_handler(CommandHandler("about", about_command))
     app.add_handler(CommandHandler("contact", contact_command))
+
+    async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        await update.message.reply_text(
+            "🤖 Bot Status: Online ✅\n"
+            "⚡ Shubham Help Bot is running smoothly! ❤️"
+        )
+
+    async def id_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        user = update.effective_user
+        await update.message.reply_text(
+            f"🆔 Your Telegram ID: {user.id}"
+        )
+
+
+    async def joke_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        await update.message.reply_text(
+            random.choice([
+                "Teacher: Homework kahan hai? Student: Sir, WiFi nahi tha 😂",
+                "Mera phone mujhse zyada busy rehta hai 😂📱",
+                "Diet kal se pakka... ye dialogue bahut purana hai 😂"
+            ])
+        )
+
+    async def quote_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        await update.message.reply_text(
+            random.choice([
+                "✨ Khud par bharosa rakho, waqt zaroor badlega.",
+                "💪 Chhoti progress bhi progress hoti hai.",
+                "🌟 Har din ek nayi opportunity hai."
+            ])
+        )
+
+    async def love_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        await update.message.reply_text("❤️😊 Aapke liye ek special smile!")
+
+    async def radhe_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        await update.message.reply_text("🙏 Radhe Radhe ❤️🌸")
+
+    async def menu_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        await update.message.reply_text(
+            "🤖 Shubham Bot Commands\n\n"
+            "/start - Main Menu\n"
+            "/help - Help\n"
+            "/joke - Random Joke 😂\n"
+            "/quote - Motivational Quote ✨\n"
+            "/love - Special Reply ❤️\n"
+            "/radhe - Radhe Radhe 🙏\n"
+            "/menu - Commands List 📋"
+        )
+
+
+
+    app.add_handler(CommandHandler("joke", joke_command))
+    app.add_handler(CommandHandler("quote", quote_command))
+    app.add_handler(CommandHandler("love", love_command))
+    app.add_handler(CommandHandler("radhe", radhe_command))
+    app.add_handler(CommandHandler("menu", menu_command))
+
+
+    app.add_handler(CommandHandler("status", status_command))
+    app.add_handler(CommandHandler("id", id_command))
 
     app.add_handler(CallbackQueryHandler(button_handler))
 
