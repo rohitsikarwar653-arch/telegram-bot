@@ -1402,13 +1402,36 @@ def main():
 
 
     async def joke_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
-        await send_reply(update, 
-            random.choice([
-                "Teacher: Homework kahan hai? Student: Sir, WiFi nahi tha 😂",
-                "Mera phone mujhse zyada busy rehta hai 😂📱",
-                "Diet kal se pakka... ye dialogue bahut purana hai 😂"
-            ])
-        )
+        import random
+
+        category = " ".join(context.args).lower().strip()
+
+        jokes = {
+            "funny": [
+                "😂 Teacher: Homework kahan hai? Student: Sir, WiFi nahi tha!",
+                "🤣 Phone bola: Battery low. Maine bola: Same bro!",
+                "😂 Monday aur mera mood—dono kabhi ready nahi hote!"
+            ],
+            "love": [
+                "❤️ Pyaar mein sab smart hote hain, bas reply aate hi nervous ho jaate hain. 😂",
+                "😂 Crush ka 'Hi' aaya aur dil ne 5G speed pakad li! ❤️",
+                "❤️ Love ka rule simple hai: Seen ka wait aur reply ki hope. 😂"
+            ],
+            "friend": [
+                "😂 Dost wahi jo problem mein saath de... aur photo mein tag bhi kare!",
+                "🤣 Best friend: 'Bhai secret hai.' 5 minute baad poori duniya ko pata!",
+                "😂 Dost ke saath argument ka result: Dono galat, friendship right!"
+            ],
+            "default": [
+                "😂 Teacher: Homework kahan hai? Student: Sir, WiFi nahi tha!",
+                "🤣 Mera phone bhi mujhe ignore karta hai—battery 1% pe chala jata hai!",
+                "😂 Life short hai, isliye jokes long rakho!",
+                "🤣 Main diet par hoon... bas khana dekhte hi diet mujhe chhod deti hai!"
+            ]
+        }
+
+        reply = random.choice(jokes.get(category, jokes["default"]))
+        await send_reply(update, reply)
 
     async def quote_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await send_reply(update, 
