@@ -260,6 +260,30 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     text = update.message.text.lower().strip()
 
+    from datetime import datetime
+    hour = datetime.now().hour
+
+    if text in (
+        "good morning", "morning", "gm",
+        "good afternoon", "afternoon",
+        "good evening", "evening",
+        "good night", "gn"
+    ):
+        if 5 <= hour < 12:
+            greeting = "🌅 Good Morning"
+        elif 12 <= hour < 17:
+            greeting = "☀️ Good Afternoon"
+        elif 17 <= hour < 21:
+            greeting = "🌆 Good Evening"
+        else:
+            greeting = "🌙 Good Night"
+
+        await update.message.reply_text(
+            f"{greeting} ❤️😊 Aapka din achha rahe!"
+        )
+        return
+
+
     user = update.effective_user
     profiles = context.application.bot_data.setdefault("profiles", {})
 
