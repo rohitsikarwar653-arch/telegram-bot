@@ -1272,6 +1272,73 @@ async def reset_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def remind_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if len(context.args) < 2:
+        await send_reply(
+            update,
+            "⏰ Reminder format:\n\n"
+            "/remind 10m पानी पीना\n"
+            "/remind 1h खाना खाना"
+        )
+        return
+
+    time_text = context.args[0].lower()
+    reminder_text = " ".join(context.args[1:])
+
+    import re
+    match = re.fullmatch(r"(\d+)(s|m|h)", time_text)
+
+    if not match:
+        await send_reply(
+            update,
+            "❌ Time format गलत है.\n"
+            "Example: /remind 10m पानी पीना"
+        )
+        return
+
+    amount = int(match.group(1))
+    unit = match.group(2)
+
+    if unit == "s":
+        delay = amount
+    elif unit == "m":
+        delay = amount * 60
+    else:
+        delay = amount * 3600
+
+    if delay > 86400:
+        await send_reply(
+            update,
+            "⚠️ Maximum reminder time 24 hours है."
+        )
+        return
+
+    import asyncio
+
+    await send_reply(
+        update,
+        f"⏰ Reminder set!\n\n"
+        f"📝 {reminder_text}\n"
+        f"⌛ {time_text} बाद याद दिलाऊँगा. ❤️"
+    )
+
+    async def reminder_task():
+        await asyncio.sleep(delay)
+        try:
+            await context.bot.send_message(
+                chat_id=update.effective_chat.id,
+                text=(
+                    "🔔 Reminder!\n\n"
+                    f"📝 {reminder_text}\n\n"
+                    "❤️ आपका reminder आ गया!"
+                )
+            )
+        except Exception as e:
+            print(f"Reminder error: {e}")
+
+    asyncio.create_task(reminder_task())
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1368,6 +1435,7 @@ def main():
     app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("broadcast", broadcast_command))
     app.add_handler(CommandHandler("profile", profile_command))
+    app.add_handler(CommandHandler("remind", remind_command))
     app.add_handler(CommandHandler("reset", reset_command))
     app.add_handler(CommandHandler("block", block_command))
     app.add_handler(CommandHandler("unblock", unblock_command))
