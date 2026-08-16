@@ -275,6 +275,28 @@ async def send_reply(update: Update, text: str, delay: float = 0.7, **kwargs):
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message and update.message.text:
+        mood_text = update.message.text.lower().strip()
+
+        mood_replies = {
+            "sad": "❤️ Don't worry, main yahin hoon. Sab theek ho jayega. 😊",
+            "dukhi": "❤️ Udaas mat ho, main yahin hoon. Sab theek ho jayega. 😊",
+            "happy": "🥳 Ye sunkar mujhe bhi khushi hui! Aise hi smile karte raho. ❤️",
+            "khush": "🥳 Bahut badhiya! Aap khush ho to bot bhi khush hai. ❤️",
+            "angry": "😌 Thoda relax kijiye... ek deep breath lijiye. Sab better ho jayega. ❤️",
+            "gussa": "😌 Thoda relax kijiye... pehle calm ho jaiye. ❤️",
+            "bored": "😂 Bore ho rahe ho? Chaliye ek joke sunata hoon!",
+            "boring": "😂 Bore ho rahe ho? Chaliye kuch interesting baat karte hain!",
+            "tired": "❤️ Thak gaye ho to thoda rest kar lijiye. Health first! 😊",
+            "thak": "❤️ Thak gaye ho to thoda rest kar lijiye. 😊",
+        }
+
+        for mood, reply in mood_replies.items():
+            if mood in mood_text:
+                await send_reply(update, reply)
+                return
+
+
+    if update.message and update.message.text:
         greeting_text = update.message.text.lower().strip()
 
         profiles = context.application.bot_data.setdefault("profiles", {})
