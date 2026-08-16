@@ -1252,6 +1252,26 @@ async def profile_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def reset_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user_id = update.effective_user.id
+
+    # Clear conversation-related data while keeping profile/stats.
+    for key in (
+        "conversation",
+        "conversation_history",
+        "chat_history",
+        "context_history",
+        "reply_to_user",
+    ):
+        context.user_data.pop(key, None)
+
+    await send_reply(
+        update,
+        "🔄 Conversation reset ho gayi!\n\n"
+        "✨ Ab hum fresh start karte hain. 😊❤️"
+    )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1348,6 +1368,7 @@ def main():
     app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("broadcast", broadcast_command))
     app.add_handler(CommandHandler("profile", profile_command))
+    app.add_handler(CommandHandler("reset", reset_command))
     app.add_handler(CommandHandler("block", block_command))
     app.add_handler(CommandHandler("unblock", unblock_command))
     app.add_handler(CommandHandler("blocked", blocked_command))
