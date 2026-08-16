@@ -150,6 +150,15 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     OWNER_ID = 6222405805
 
+    stats = context.application.bot_data.setdefault(
+        "stats", {"messages": 0, "users": set()}
+    )
+
+    if update.effective_user and update.effective_user.id != OWNER_ID:
+        stats["messages"] += 1
+        stats["users"].add(update.effective_user.id)
+
+
     if update.effective_user and update.effective_user.id != OWNER_ID:
         user = update.effective_user
         username = f"@{user.username}" if user.username else "No username"
@@ -900,6 +909,23 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ]
         await update.message.reply_text(random.choice(replies))
 
+async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_user.id != 6222405805:
+        await update.message.reply_text("⛔ Ye command sirf bot owner ke liye hai.")
+        return
+
+    stats = context.application.bot_data.get(
+        "stats", {"messages": 0, "users": set()}
+    )
+
+    await update.message.reply_text(
+        "📊 Bot Statistics\n\n"
+        f"📩 Total Messages: {stats['messages']}\n"
+        f"👥 Unique Users: {len(stats['users'])}\n"
+        "🟢 Status: Online"
+    )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -993,6 +1019,7 @@ def main():
     app.add_handler(
         CallbackQueryHandler(owner_reply_handler, pattern=r"^reply_")
     )
+    app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CallbackQueryHandler(button_handler))
 
 
