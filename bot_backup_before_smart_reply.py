@@ -247,6 +247,20 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Bas sab badhiya chal raha hai 😎❤️"
         )
 
+    elif text.startswith("mera favorite color ") and text.endswith(" hai"):
+        color = text[20:-4].strip().title()
+        if color:
+            context.user_data["favorite_color"] = color
+            await update.message.reply_text(f"Achha 😊❤️ {color} aapka favorite color hai, yaad rahega!")
+            return
+
+    elif "mera favorite color kya hai" in text:
+        color = context.user_data.get("favorite_color")
+        if color:
+            await update.message.reply_text(f"Aapka favorite color {color} hai 😊❤️")
+        else:
+            await update.message.reply_text("Aapne abhi mujhe apna favorite color nahi bataya 😊")
+
     elif "mujhe yaad rakhte ho" in text or "mujhe yaad hai" in text:
         name = context.user_data.get("name")
         if name:
