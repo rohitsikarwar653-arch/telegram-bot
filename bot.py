@@ -63,6 +63,23 @@ async def contact_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=back_button(),
     )
 
+async def owner_reply_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+
+    if update.effective_user.id != 6222405805:
+        return
+
+    if query.data.startswith("reply_"):
+        user_id = int(query.data.split("_", 1)[1])
+        context.user_data["reply_to_user"] = user_id
+
+        await query.message.reply_text(
+            "✍️ Ab apna reply message bhejiye.\n"
+            "Main use selected user ko send kar dunga."
+        )
+
+
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -104,7 +121,31 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             reply_markup=back_button(),
         )
 
+async def owner_message_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_user.id != 6222405805:
+        return False
+
+    target = context.user_data.get("reply_to_user")
+    if not target:
+        return False
+
+    try:
+        await context.bot.send_message(
+            chat_id=target,
+            text=update.message.text
+        )
+        await update.message.reply_text("✅ Reply send ho gaya.")
+        context.user_data.pop("reply_to_user", None)
+    except Exception as e:
+        await update.message.reply_text(f"❌ Reply send nahi ho paya: {e}")
+
+    return True
+
+
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if await owner_message_reply(update, context):
+        return
+
     text = update.message.text.lower().strip()
 
     OWNER_ID = 6222405805
@@ -115,6 +156,13 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         name = user.full_name or "Unknown"
 
         try:
+            keyboard = [
+                [InlineKeyboardButton(
+                    "↩️ Reply",
+                    callback_data=f"reply_{user.id}"
+                )]
+            ]
+
             await context.bot.send_message(
                 chat_id=OWNER_ID,
                 text=(
@@ -123,7 +171,8 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
                     f"📱 Username: {username}\n"
                     f"🆔 ID: {user.id}\n"
                     f"💬 Message: {update.message.text}"
-                )
+                ),
+                reply_markup=InlineKeyboardMarkup(keyboard)
             )
         except Exception as e:
             print(f"Notification error: {e}")
@@ -941,7 +990,11 @@ def main():
     app.add_handler(CommandHandler("id", id_command))
 
     app.add_handler(CommandHandler("info", info_command))
+    app.add_handler(
+        CallbackQueryHandler(owner_reply_handler, pattern=r"^reply_")
+    )
     app.add_handler(CallbackQueryHandler(button_handler))
+
 
     app.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND, auto_reply)
