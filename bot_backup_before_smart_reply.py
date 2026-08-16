@@ -205,9 +205,14 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(random.choice(replies))
 
     elif "good night" in text:
-        await update.message.reply_text(
-            "Good night 🌙❤️ Sweet dreams!"
-        )
+        replies = [
+            "Good Night 🌙❤️ Sweet dreams!",
+            "Good Night 😊🌙 Achhi neend aaye!",
+            "Shubh Ratri 🌙❤️ Kal ka din aur bhi achha ho!",
+            "Good Night 😴✨ Take care and sleep well!",
+            "Sweet dreams 🌙😊 Kal phir baat karenge!"
+        ]
+        await update.message.reply_text(random.choice(replies))
 
     elif text in ("bye", "goodbye"):
         await update.message.reply_text(
