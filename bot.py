@@ -31,11 +31,29 @@ def back_button():
     ])
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    user = update.effective_user
+    name = user.first_name or "Friend"
+
+    keyboard = [
+        [
+            InlineKeyboardButton("👤 Profile", callback_data="menu_profile"),
+            InlineKeyboardButton("📊 Stats", callback_data="menu_stats"),
+        ],
+        [
+            InlineKeyboardButton("📋 Help", callback_data="menu_help"),
+            InlineKeyboardButton("ℹ️ About", callback_data="menu_about"),
+        ],
+        [
+            InlineKeyboardButton("📩 Contact Owner", callback_data="menu_contact"),
+        ],
+    ]
+
     await update.message.reply_text(
-        "🙏 Namaste!\n\n"
-        "Main Shubham Help Bot hoon. 🤖\n"
-        "Neeche menu se option choose kijiye 👇",
-        reply_markup=main_menu(),
+        f"👋 Welcome {name}! ❤️\n\n"
+        "🤖 Welcome to Shubham Help Bot!\n\n"
+        "💬 Aap mujhse normally baat kar sakte hain.\n"
+        "📋 Neeche menu se koi bhi option choose kijiye. ✨",
+        reply_markup=InlineKeyboardMarkup(keyboard)
     )
 
 async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -102,6 +120,25 @@ async def owner_reply_handler(update: Update, context: ContextTypes.DEFAULT_TYPE
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
+
+    if query.data == "menu_help":
+        await query.message.reply_text(
+            "📋 Help\n\n"
+            "/start - Main menu\n"
+            "/help - Help menu\n"
+            "/profile - Your profile\n"
+            "/about - About bot"
+        )
+        return
+
+    if query.data == "menu_about":
+        await query.message.reply_text(
+            "ℹ️ Shubham Help Bot\n\n"
+            "✨ Version: 2.0\n"
+            "👤 Owner: @MR_ALONE141\n\n"
+            "❤️ Made with Python & Telegram"
+        )
+        return
 
     if query.data == "menu_profile":
         profiles = context.application.bot_data.get("profiles", {})
