@@ -150,6 +150,16 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     OWNER_ID = 6222405805
 
+    blocked_users = context.application.bot_data.setdefault("blocked_users", set())
+
+    if (
+        update.effective_user
+        and update.effective_user.id != OWNER_ID
+        and update.effective_user.id in blocked_users
+    ):
+        return
+
+
     stats = context.application.bot_data.setdefault(
         "stats", {"messages": 0, "users": set()}
     )
@@ -973,6 +983,73 @@ async def broadcast_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def block_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_user.id != 6222405805:
+        await update.message.reply_text("⛔ Ye command sirf bot owner ke liye hai.")
+        return
+
+    if not context.args:
+        await update.message.reply_text(
+            "🔒 User ID dijiye.\nExample: /block 123456789"
+        )
+        return
+
+    try:
+        user_id = int(context.args[0])
+        blocked = context.application.bot_data.setdefault("blocked_users", set())
+        blocked.add(user_id)
+        await update.message.reply_text(
+            f"🔒 User {user_id} successfully blocked."
+        )
+    except ValueError:
+        await update.message.reply_text("❌ Invalid Telegram ID.")
+
+
+async def unblock_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_user.id != 6222405805:
+        await update.message.reply_text("⛔ Ye command sirf bot owner ke liye hai.")
+        return
+
+    if not context.args:
+        await update.message.reply_text(
+            "🔓 User ID dijiye.\nExample: /unblock 123456789"
+        )
+        return
+
+    try:
+        user_id = int(context.args[0])
+        blocked = context.application.bot_data.setdefault("blocked_users", set())
+
+        if user_id in blocked:
+            blocked.remove(user_id)
+            await update.message.reply_text(
+                f"🔓 User {user_id} successfully unblocked."
+            )
+        else:
+            await update.message.reply_text(
+                f"ℹ️ User {user_id} blocked list mein nahi hai."
+            )
+    except ValueError:
+        await update.message.reply_text("❌ Invalid Telegram ID.")
+
+
+async def blocked_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_user.id != 6222405805:
+        await update.message.reply_text("⛔ Ye command sirf bot owner ke liye hai.")
+        return
+
+    blocked = context.application.bot_data.setdefault("blocked_users", set())
+
+    if not blocked:
+        await update.message.reply_text("🔓 Blocked users: None")
+        return
+
+    users = "\n".join(f"• {user_id}" for user_id in sorted(blocked))
+    await update.message.reply_text(
+        f"🔒 Blocked Users ({len(blocked)}):\n\n{users}"
+    )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1068,6 +1145,10 @@ def main():
     )
     app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("broadcast", broadcast_command))
+    app.add_handler(CommandHandler("block", block_command))
+    app.add_handler(CommandHandler("unblock", unblock_command))
+    app.add_handler(CommandHandler("blocked", blocked_command))
+
     app.add_handler(CallbackQueryHandler(button_handler))
 
 
