@@ -150,7 +150,10 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Main bilkul badhiya hoon 😊 Aap batao?",
             "Ekदम mast hoon 😄❤️ Aap kaise ho?",
             "Bilkul fine! 😎 Aapka kya haal hai?",
-            "Main badhiya hoon 😊 Aapse baat karke aur bhi achha lag raha hai ❤️"
+            "Main badhiya hoon 😊 Aapse baat karke aur bhi achha lag raha hai ❤️",
+            "Mast chal raha hai 😄 Aap sunao, sab theek?",
+            "Bilkul fit hoon 🤖❤️ Aapki kya khabar hai?",
+            "Badhiya hoon 😊 Bas aapse baat kar raha hoon."
         ]
         await update.message.reply_text(random.choice(replies))
 
