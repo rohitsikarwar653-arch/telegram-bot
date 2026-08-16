@@ -107,6 +107,53 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
 
+    history = context.user_data.setdefault("chat_history", [])
+    history.append(text)
+    if len(history) > 5:
+        history.pop(0)
+
+    name = context.user_data.get("name")
+
+    if any(x in text for x in ("tired", "thak gaya", "thak gya", "bahut thak")):
+        reply = (
+            f"Arre {name} ❤️ Thoda rest karo. Aaj kaafi thak gaye lagte ho."
+            if name else
+            "Arre ❤️ Thoda rest karo. Aaj kaafi thak gaye lagte ho."
+        )
+        await update.message.reply_text(reply)
+        return
+
+    if any(x in text for x in ("khush hoon", "khush hu", "happy hoon", "happy hu")):
+        await update.message.reply_text(
+            "Ye sunkar mujhe bhi achha laga 😊❤️ Aise hi khush raho!"
+        )
+        return
+
+    if any(x in text for x in ("dukhi hoon", "sad hoon", "udaas hoon", "sad hu")):
+        await update.message.reply_text(
+            "Aww ❤️ Udaas mat ho. Main yahin hoon, baat karte hain 😊"
+        )
+        return
+
+    if any(x in text for x in ("akela hoon", "akela hu", "lonely hoon", "lonely hu")):
+        await update.message.reply_text(
+            "Aap akela feel mat karo ❤️ Main yahin hoon, baat karte hain."
+        )
+        return
+
+    if any(x in text for x in ("busy hoon", "busy hu", "kaam hai")):
+        await update.message.reply_text(
+            "Theek hai 😊 Pehle apna kaam kar lo, phir aaram se baat karenge ❤️"
+        )
+        return
+
+    if text in ("haan", "hmm", "hmmm", "achha", "acha") and len(history) >= 2:
+        await update.message.reply_text(
+            "Hmm 😊 Samajh gaya. Aage batao, main sun raha hoon ❤️"
+        )
+        return
+
+
     name = context.user_data.get("name")
 
     if text in ("kaise ho", "kaisa ho", "how are you"):
