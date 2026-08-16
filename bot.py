@@ -107,6 +107,39 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
 
+    name = context.user_data.get("name")
+
+    if name and text in ("kaise ho", "kaisa ho", "how are you"):
+        await update.message.reply_text(
+            f"Main bilkul badhiya hoon 😊❤️ Aap batao {name}?"
+        )
+        return
+
+    if name and text in ("kya kar rahe ho", "kya kr rahe ho", "what are you doing"):
+        await update.message.reply_text(
+            f"Bas aapse baat kar raha hoon, {name} 😄❤️"
+        )
+        return
+
+    if name and text in ("good morning", "gm"):
+        await update.message.reply_text(
+            f"Good Morning {name} 🌅😊❤️ Aapka din bahut achha rahe!"
+        )
+        return
+
+    if name and text in ("good night", "gn"):
+        await update.message.reply_text(
+            f"Good Night {name} 🌙😴❤️ Sweet dreams!"
+        )
+        return
+
+    if name and text in ("bye", "goodbye"):
+        await update.message.reply_text(
+            f"Bye {name} 😊❤️ Phir milte hain!"
+        )
+        return
+
+
     if text.startswith("mera naam ") and text.endswith(" hai"):
         name = text[9:-4].strip().title()
         if name:
