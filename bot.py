@@ -141,25 +141,31 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     if query.data == "menu_profile":
-        profiles = context.application.bot_data.get("profiles", {})
-        profile = profiles.get(update.effective_user.id)
+        profiles = context.application.bot_data.setdefault("profiles", {})
+        user = update.effective_user
+        profile = profiles.get(user.id)
 
-        if profile:
-            username = (
-                f"@{profile['username']}"
-                if profile["username"] else "No username"
-            )
-            await query.message.reply_text(
-                "👤 Your Profile\n\n"
-                f"📝 Name: {profile['name']}\n"
-                f"📱 Username: {username}\n"
-                f"🆔 ID: {update.effective_user.id}\n"
-                f"📩 Messages: {profile['messages']}"
-            )
-        else:
-            await query.message.reply_text(
-                "👤 Profile abhi create nahi hua."
-            )
+        if not profile:
+            profile = {
+                "name": user.full_name,
+                "username": user.username,
+                "messages": 0,
+            }
+            profiles[user.id] = profile
+
+        username = (
+            f"@{profile['username']}"
+            if profile.get("username")
+            else "No username"
+        )
+
+        await query.message.reply_text(
+            "👤 Your Profile\n\n"
+            f"📝 Name: {profile['name']}\n"
+            f"📱 Username: {username}\n"
+            f"🆔 ID: {user.id}\n"
+            f"📩 Messages: {profile.get('messages', 0)}"
+        )
         return
 
     if query.data == "menu_stats":
