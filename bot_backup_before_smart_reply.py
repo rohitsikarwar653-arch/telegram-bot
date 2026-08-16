@@ -247,6 +247,13 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Bas sab badhiya chal raha hai 😎❤️"
         )
 
+    elif "mera naam kya hai" in text or "mujhe mera naam batao" in text:
+        name = context.user_data.get("name")
+        if name:
+            await update.message.reply_text(f"Aapka naam {name} hai 😊❤️")
+        else:
+            await update.message.reply_text("Aapne abhi mujhe apna naam nahi bataya 😊")
+
     elif "tumhara naam kya hai" in text or "aapka naam kya hai" in text:
         await update.message.reply_text(
             "Mera naam Shubham Help Bot hai 🤖❤️"
