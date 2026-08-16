@@ -275,6 +275,28 @@ async def send_reply(update: Update, text: str, delay: float = 0.7, **kwargs):
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message and update.message.text:
+        greeting_text = update.message.text.lower().strip()
+
+        profiles = context.application.bot_data.setdefault("profiles", {})
+        user = update.effective_user
+        profile = profiles.get(user.id, {})
+
+        display_name = profile.get("name") or user.first_name or "Friend"
+
+        greeting_replies = {
+            "good morning": f"🌅 Good Morning, {display_name}! ❤️😊 Aapka din bahut achha rahe!",
+            "good night": f"🌙 Good Night, {display_name}! ❤️😊 Sweet dreams!",
+            "radhe radhe": f"🙏 Radhe Radhe, {display_name}! ❤️🌸",
+            "good evening": f"🌆 Good Evening, {display_name}! ❤️😊 Aapka din achha rahe!",
+        }
+
+        for keyword, reply in greeting_replies.items():
+            if keyword in greeting_text:
+                await send_reply(update, reply)
+                return
+
+
+    if update.message and update.message.text:
         keyword_text = update.message.text.lower().strip()
 
         keyword_replies = {
