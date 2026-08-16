@@ -266,7 +266,7 @@ def main():
         MessageHandler(filters.TEXT & ~filters.COMMAND, auto_reply)
     )
     
-threading.Thread(target=run_web, daemon=True).start()
+    threading.Thread(target=run_web, daemon=True).start()
     print("Bot started...")
     app.run_polling()
 
