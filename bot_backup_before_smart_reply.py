@@ -118,7 +118,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
-    if text.startswith("mera naam ") and text.endswith(" hai"):
+    if text.startswith("mera naam ") and text.endswith(" hai") and text not in ("mera naam kya hai", "mera naam kya hai?"):
         name = text[9:-4].strip().title()
         if name:
             context.user_data["name"] = name
