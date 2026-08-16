@@ -274,6 +274,35 @@ async def send_reply(update: Update, text: str, delay: float = 0.7, **kwargs):
     await update.message.reply_text(text, **kwargs)
 
 async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    import random
+    if update.message and update.message.text:
+        secret_text = update.message.text.lower().strip()
+
+        secret_replies = {
+            "secret": [
+                "🤫 Secret unlocked! Aapko special reply mil gaya. ✨❤️",
+                "🔐 Shhh... Ye secret sirf aapke liye hai. 😎",
+            ],
+            "surprise": [
+                "🎁 Surprise! Aapke liye ek virtual smile 😊❤️",
+                "✨ Surprise unlocked! Aaj ka din special hai. 😎🔥",
+            ],
+            "shubham bot": [
+                "🤖❤️ Shubham Bot present! Aapne mujhe secret code se bula liya. 😎",
+                "🚀 Shubham Help Bot activated! ✨🤖",
+            ],
+            "magic word": [
+                "🪄✨ Magic word accepted! Secret mode activated. 🤫❤️",
+                "🎩✨ Magic successful! Aap officially cool ho. 😎",
+            ],
+        }
+
+        for phrase, replies in secret_replies.items():
+            if phrase in secret_text:
+                await send_reply(update, random.choice(replies))
+                return
+
+
     if update.message and update.message.text:
         compliment_text = update.message.text.lower().strip()
 
