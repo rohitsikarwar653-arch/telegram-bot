@@ -109,6 +109,55 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     name = context.user_data.get("name")
 
+    if text in ("kaise ho", "kaisa ho", "how are you"):
+        if name:
+            await update.message.reply_text(
+                f"Main ekdum mast hoon 😎❤️ Aap batao {name}, aaj kya scene hai?"
+            )
+        else:
+            await update.message.reply_text(
+                "Main ekdum mast hoon 😎❤️ Aap batao, aaj kya scene hai?"
+            )
+        return
+
+    if text in ("kya kar rahe ho", "kya kr rahe ho", "what are you doing"):
+        if name:
+            await update.message.reply_text(
+                f"Bas {name} se baatein kar raha hoon 😄❤️ Aur kya!"
+            )
+        else:
+            await update.message.reply_text(
+                "Bas aapse baatein kar raha hoon 😄❤️ Aur kya!"
+            )
+        return
+
+    if text in ("bore ho raha hoon", "bore ho rha hoon"):
+        await update.message.reply_text(
+            "Bore hone ki tension mat lo 😎❤️ Main hoon na, chalo baat karte hain!"
+        )
+        return
+
+    if text in ("kya scene hai", "kya chal raha hai", "kya chl raha hai"):
+        await update.message.reply_text(
+            "Scene ekdum set hai 😎🔥 Aap batao kya chal raha hai?"
+        )
+        return
+
+    if text in ("mood off hai", "mood kharab hai"):
+        await update.message.reply_text(
+            "Arre ❤️ Mood ko itna serious mat hone do. Ek smile karo 😊✨"
+        )
+        return
+
+    if text in ("miss you", "miss u", "i miss you"):
+        await update.message.reply_text(
+            "Aww 🥹❤️ Main yahin hoon, gayab thodi hua!"
+        )
+        return
+
+
+    name = context.user_data.get("name")
+
     if name and text in ("kaise ho", "kaisa ho", "how are you"):
         await update.message.reply_text(
             f"Main bilkul badhiya hoon 😊❤️ Aap batao {name}?"
