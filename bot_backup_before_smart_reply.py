@@ -135,13 +135,16 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
 
     elif text in ("radhe radhe", "radhey radhey"):
-        await update.message.reply_text("🙏 Radhe Radhe ❤️")
-    elif any(x in text for x in ("kya kar rahe ho", "kya kr rahe ho", "kya kar rhe ho", "kya kr rhe ho")):
+        await update.message.reply_text("Radhe Radhe 🙏❤️")
+
+    elif any(x in text for x in ("kya kar rahe ho", "kya kr rahe ho", "kya kar rhe ho")):
         replies = [
             "Bas aapse baat kar raha hoon 😄❤️",
-            "Kuch khaas nahi, aapka message dekh raha hoon 😎",
-            "Bas yahin hoon, aapse chatting kar raha hoon 😊",
-            "Aapka reply dene me busy hoon 🤖❤️"
+            "Kuch khaas nahi, aapka message dekh raha hoon 😊",
+            "Bas yahin hoon, aapse chatting kar raha hoon ❤️",
+            "Aapka reply dene mein busy hoon 🤖❤️",
+            "Bas aaram se hoon 😄 Aap batao?",
+            "Aapse baat karna hi sabse achha kaam hai 😊❤️"
         ]
         await update.message.reply_text(random.choice(replies))
 
@@ -155,7 +158,6 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Bilkul fit hoon 🤖❤️ Aapki kya khabar hai?",
             "Badhiya hoon 😊 Bas aapse baat kar raha hoon."
         ]
-        await update.message.reply_text(random.choice(replies))
 
     elif "kahan ho" in text:
         await update.message.reply_text("Yahin hoon 😎 Aapse baat kar raha hoon.")
