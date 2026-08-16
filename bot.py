@@ -1355,6 +1355,25 @@ async def ping_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def commands_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    await send_reply(
+        update,
+        "📋 Available Commands\n\n"
+        "/start - Main menu 👋\n"
+        "/help - Help menu 📖\n"
+        "/profile - Your profile 👤\n"
+        "/id - User information 🆔\n"
+        "/ping - Check bot status 🏓\n"
+        "/joke - Random joke 😂\n"
+        "/quote - Random quote ✨\n"
+        "/remind - Set a reminder ⏰\n"
+        "/reset - Reset conversation 🔄\n"
+        "/about - About bot ℹ️\n"
+        "/contact - Contact owner 📩\n\n"
+        "❤️ Shubham Help Bot"
+    )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1485,6 +1504,7 @@ def main():
     app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("broadcast", broadcast_command))
     app.add_handler(CommandHandler("profile", profile_command))
+    app.add_handler(CommandHandler("commands", commands_command))
     app.add_handler(CommandHandler("ping", ping_command))
     app.add_handler(CommandHandler("remind", remind_command))
     app.add_handler(CommandHandler("reset", reset_command))
