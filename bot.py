@@ -677,6 +677,20 @@ def main():
     app.add_handler(CommandHandler("about", about_command))
     app.add_handler(CommandHandler("contact", contact_command))
 
+    async def info_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+        await update.message.reply_text(
+            "🤖 Shubham Help Bot\n\n"
+            "✨ Features:\n"
+            "• Smart replies 💬\n"
+            "• Funny replies 😂\n"
+            "• Friendly conversation ❤️\n"
+            "• Radhe Radhe replies 🙏\n"
+            "• Useful commands ⚡\n\n"
+            "🟢 Status: Online\n"
+            "❤️ Made with Python"
+        )
+
+
     async def status_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text(
             "🤖 Bot Status: Online ✅\n"
@@ -744,6 +758,7 @@ def main():
     app.add_handler(CommandHandler("status", status_command))
     app.add_handler(CommandHandler("id", id_command))
 
+    app.add_handler(CommandHandler("info", info_command))
     app.add_handler(CallbackQueryHandler(button_handler))
 
     app.add_handler(
