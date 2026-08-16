@@ -926,6 +926,53 @@ async def stats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def broadcast_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    if update.effective_user.id != 6222405805:
+        await update.message.reply_text("⛔ Ye command sirf bot owner ke liye hai.")
+        return
+
+    if not context.args:
+        await update.message.reply_text(
+            "📢 Broadcast message likhiye.\n\n"
+            "Example:\n/broadcast Hello everyone ❤️"
+        )
+        return
+
+    message = " ".join(context.args)
+
+    stats = context.application.bot_data.get(
+        "stats", {"messages": 0, "users": set()}
+    )
+
+    users = list(stats.get("users", set()))
+
+    if not users:
+        await update.message.reply_text(
+            "📭 Abhi koi saved user nahi mila."
+        )
+        return
+
+    sent = 0
+    failed = 0
+
+    for user_id in users:
+        try:
+            await context.bot.send_message(
+                chat_id=user_id,
+                text=message
+            )
+            sent += 1
+        except Exception as e:
+            failed += 1
+            print(f"Broadcast error for {user_id}: {e}")
+
+    await update.message.reply_text(
+        "📢 Broadcast complete!\n\n"
+        f"✅ Sent: {sent}\n"
+        f"❌ Failed: {failed}"
+    )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1020,6 +1067,7 @@ def main():
         CallbackQueryHandler(owner_reply_handler, pattern=r"^reply_")
     )
     app.add_handler(CommandHandler("stats", stats_command))
+    app.add_handler(CommandHandler("broadcast", broadcast_command))
     app.add_handler(CallbackQueryHandler(button_handler))
 
 
