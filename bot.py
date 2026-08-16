@@ -1581,6 +1581,66 @@ async def mystats_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
 
+async def guess_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    import random
+
+    user = update.effective_user
+    games = context.application.bot_data.setdefault("guess_games", {})
+
+    if not context.args:
+        games[user.id] = random.randint(1, 10)
+
+        await send_reply(
+            update,
+            "🎯 Guess Game Started!\n\n"
+            "Maine 1 se 10 ke beech ek number choose kiya hai. 🤫\n"
+            "Ab guess kijiye:\n\n"
+            "/guess 7\n\n"
+            "🍀 Good luck!"
+        )
+        return
+
+    try:
+        guess = int(context.args[0])
+    except ValueError:
+        await send_reply(
+            update,
+            "❌ Sirf number likhiye. Example: /guess 7"
+        )
+        return
+
+    if guess < 1 or guess > 10:
+        await send_reply(
+            update,
+            "⚠️ Number 1 se 10 ke beech hona chahiye."
+        )
+        return
+
+    if user.id not in games:
+        games[user.id] = random.randint(1, 10)
+
+    secret = games[user.id]
+
+    if guess == secret:
+        del games[user.id]
+        await send_reply(
+            update,
+            f"🎉 Correct! Number {secret} tha! ❤️\n"
+            "🏆 You won!\n\n"
+            "Naya game ke liye /guess bhejiye."
+        )
+    elif guess < secret:
+        await send_reply(
+            update,
+            "📈 Thoda bada number try kijiye! 😎"
+        )
+    else:
+        await send_reply(
+            update,
+            "📉 Thoda chhota number try kijiye! 😎"
+        )
+
+
 def main():
     app = Application.builder().token(os.environ["BOT_TOKEN"]).build()
 
@@ -1711,6 +1771,7 @@ def main():
     app.add_handler(CommandHandler("stats", stats_command))
     app.add_handler(CommandHandler("broadcast", broadcast_command))
     app.add_handler(CommandHandler("profile", profile_command))
+    app.add_handler(CommandHandler("guess", guess_command))
     app.add_handler(CommandHandler("mystats", mystats_command))
     app.add_handler(CommandHandler("setbio", setbio_command))
     app.add_handler(CommandHandler("setname", setname_command))
