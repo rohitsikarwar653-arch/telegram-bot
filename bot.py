@@ -1098,6 +1098,22 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
 
+    if text in ("aaj ka din kaisa raha", "aaj ka din kaisa tha"):
+        await send_reply(update, random.choice([
+            "Aaj ka din kaafi achha raha 😊❤️ Aap batao aapka din kaisa raha?",
+            "Din theek tha 😄❤️ Ab aapse baat karke aur achha lag raha hai.",
+            "Aaj ka din normal tha 😊 Aapka din kaisa raha?"
+        ]))
+        return
+
+    if text in ("kya naya hai", "aaj kya hua"):
+        await send_reply(update, random.choice([
+            "Filhaal to aapse baat karna hi naya hai 😄❤️",
+            "Kuch khaas nahi 😊 Aap batao, aaj kya naya hua?",
+            "Sab mast hai 😎❤️ Aapke paas koi nayi baat hai?"
+        ]))
+        return
+
     if text == "i love you":
         await send_reply(update, "Love you too 😄❤️")
         return
