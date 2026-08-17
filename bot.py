@@ -431,11 +431,11 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
     # Happy
-    if any(x in text for x in ("khush hoon", "happy hoon", "achha din", "accha din", "mast din")):
+    if any(x in text for x in ("khush hoon", "happy hoon", "achha din", "accha din", "mast din", "mood bahut achha hai", "mood achha hai")):
         await send_reply(update, random.choice([
-            "Ye sunkar mujhe bhi achha laga 😊❤️",
-            "Wah 😄 Aise hi khush raho!",
-            "Bahut badhiya ❤️ Aaj ka din enjoy karo."
+            "Ye sunkar mujhe bhi achha laga 😊❤️ Aise hi khush raho!",
+            "Wah 😄 Aap khush ho to mood automatically achha ho jata hai ❤️",
+            "Bahut badhiya 😊❤️ Aaj ka din enjoy karo!"
         ]))
         return
 
@@ -500,6 +500,24 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if text in ("kyu", "kyun", "kyon"):
         await send_reply(update, "Bas aise hi 😊❤️")
+        return
+
+    # Going home
+    if any(x in text for x in ("ghar ja raha hoon", "ghar jaa raha hoon", "ghar ja raha", "ghar jaa raha")):
+        await send_reply(update, random.choice([
+            "Achha 😊 Dhyan se ghar jana ❤️",
+            "Theek hai 😄 Ghar pahunchkar batana!",
+            "Achha ji 😊 Safe journey, ghar pahunchkar aaram karna ❤️"
+        ]))
+        return
+
+    # Together / support
+    if text in ("kya tum mere saath ho", "kya tum mere sath ho", "tum mere saath ho", "tum mere sath ho"):
+        await send_reply(update, random.choice([
+            "Haan 😊❤️ Main yahin hoon, aapke saath.",
+            "Bilkul 🤝❤️ Jab bhi baat karni ho, main yahin hoon.",
+            "Haan ji 😊❤️ Aapse baat karne ke liye main yahin hoon."
+        ]))
         return
 
     # Natural reply for unknown/random messages
