@@ -282,6 +282,15 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = update.message.text.lower().strip()
     name = context.user_data.get("name")
 
+    # Together / support priority reply
+    if text in ("kya tum mere saath ho", "kya tum mere sath ho", "tum mere saath ho", "tum mere sath ho"):
+        await send_reply(update, random.choice([
+            "Haan 😊❤️ Main yahin hoon, aapke saath.",
+            "Bilkul 🤝❤️ Jab bhi baat karni ho, main yahin hoon.",
+            "Haan ji 😊❤️ Aapse baat karne ke liye main yahin hoon."
+        ]))
+        return
+
     # Naam save karna
     if text.startswith("mera naam ") and text.endswith(" hai") and text not in ("mera naam kya hai",):
         name = text[9:-4].strip().title()
