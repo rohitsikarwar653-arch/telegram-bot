@@ -520,15 +520,6 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ]))
         return
 
-    # Together / support
-    if text in ("kya tum mere saath ho", "kya tum mere sath ho", "tum mere saath ho", "tum mere sath ho"):
-        await send_reply(update, random.choice([
-            "Haan 😊❤️ Main yahin hoon, aapke saath.",
-            "Bilkul 🤝❤️ Jab bhi baat karni ho, main yahin hoon.",
-            "Haan ji 😊❤️ Aapse baat karne ke liye main yahin hoon."
-        ]))
-        return
-
     # Natural reply for unknown/random messages
     if any(x in text for x in ("aaj", "din", "hua", "raha", "gaya", "gayi")):
         replies = [
