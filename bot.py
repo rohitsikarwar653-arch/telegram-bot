@@ -283,7 +283,7 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
     name = context.user_data.get("name")
 
     # Together / support priority reply
-    if text in ("kya tum mere saath ho", "kya tum mere sath ho", "tum mere saath ho", "tum mere sath ho"):
+    if "mere saath ho" in text or "mere sath ho" in text:
         await send_reply(update, random.choice([
             "Haan 😊❤️ Main yahin hoon, aapke saath.",
             "Bilkul 🤝❤️ Jab bhi baat karni ho, main yahin hoon.",
