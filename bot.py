@@ -520,6 +520,27 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         ]))
         return
 
+    # Extra conversation features
+    if text in ("tum bahut achhe ho", "aap bahut achhe ho", "tum ache ho", "aap ache ho"):
+        await send_reply(update, "Aww 😊❤️ Ye sunkar mujhe bahut achha laga!")
+        return
+
+    if text in ("mujhe tumse baat karni hai", "mujhe aapse baat karni hai"):
+        await send_reply(update, "Bilkul 😊❤️ Main yahin hoon, aap mujhse baat karo.")
+        return
+
+    if text in ("mujhe hug chahiye", "mujhe ek hug chahiye"):
+        await send_reply(update, "Aao 🤗❤️ Ek warm sa virtual hug!")
+        return
+
+    if text in ("main pareshaan hoon", "mai pareshaan hoon", "main pareshan hoon", "mai pareshan hoon"):
+        await send_reply(update, "Ohh 😔❤️ Kya hua? Mujhe batao, main sun raha hoon.")
+        return
+
+    if text in ("ek baat puchu", "ek baat poochu", "ek baat puchhun", "ek baat poochhun"):
+        await send_reply(update, "Haan bilkul 😊❤️ Puchho, kya baat hai?")
+        return
+
     # Natural reply for unknown/random messages
     if any(x in text for x in ("aaj", "din", "hua", "raha", "gaya", "gayi")):
         replies = [
