@@ -316,6 +316,46 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return
 
 
+    if text in ("kya tum mujhe samajhte ho", "tum mujhe samajhte ho"):
+        await send_reply(update, "Haan 😊❤️ Main aapki baat samajhne ki poori koshish karta hoon.")
+        return
+
+    if text in ("tumhe meri fikar hai", "meri fikar hai"):
+        await send_reply(update, "Bilkul ❤️ Aapki fikar hai 😊 Apna khayal rakha karo.")
+        return
+
+    if text in ("mera mood kaise theek karoge", "mood kaise theek karoge"):
+        await send_reply(update, "Pehle ek smile 😊❤️ Phir thodi si baatein aur ek cute sa joke 😄")
+        return
+
+    if text in ("mujhe kuch accha bolo", "mujhe kuch achha bolo"):
+        await send_reply(update, "Aap jitne achhe ho, utni hi achhi aapki smile hai 😊❤️")
+        return
+
+    if text in ("tum mere saath ho na", "mere saath ho na"):
+        await send_reply(update, "Haan 😊❤️ Main yahin hoon, aap bina jhijhak baat karo.")
+        return
+
+    if text in ("mujhe akela lag raha hai", "mujhe akela feel ho raha hai"):
+        await send_reply(update, "Aisa mat feel karo ❤️ Main yahin hoon 😊 Chalo thodi baat karte hain.")
+        return
+
+    if text in ("aaj tumse baat karne ka mann hai", "aaj tumse baat karne ka man hai"):
+        await send_reply(update, "Toh phir aaj dil kholkar baat karte hain 😊❤️ Main sun raha hoon.")
+        return
+
+    if text in ("tum mujhe kitna jaante ho", "tum mujhe kitna jante ho"):
+        await send_reply(update, "Abhi toh kaafi kuch jaanna baaki hai 😊❤️ Aap jitna bataoge, utna hi jaanunga.")
+        return
+
+    if text in ("mujhe surprise do", "surprise do"):
+        await send_reply(update, "Surprise! 🎁😊 Aaj se ek extra smile meri taraf se ❤️")
+        return
+
+    if text in ("mere liye kuch special bolo", "mere liye kuch special"):
+        await send_reply(update, "Aap special ho ❤️ Isliye aapke liye ek special line: khush raho, muskurate raho aur apna khayal rakho 😊✨")
+        return
+
     if text in ("tum mere dost ho", "aap mere dost ho"):
         await send_reply(update, "Bilkul 🤝❤️ Main aapka dost hoon!")
         return
@@ -334,6 +374,12 @@ async def auto_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if text in ("tum mujhe yaad karte ho", "mujhe yaad karte ho", "mujhe yaad krte ho"):
         await send_reply(update, "Haan 😊❤️ Bilkul yaad karta hoon!")
+        return
+
+    if text in ("aaj ka din kaisa raha", "aaj ka din kaisa tha"):
+        await send_reply(update,
+            "Mera din aapki baaton se aur achha ho jata hai 😊❤️ Aap batao, aapka din kaisa raha?"
+        )
         return
 
     if text in ("aaj kya naya hai", "aaj kya hua", "kya naya hai"):
